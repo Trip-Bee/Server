@@ -1,6 +1,6 @@
 package com.ssafy.trip.domain.user.controller;
 
-import com.ssafy.treep.domain.user.service.UserService;
+import com.ssafy.trip.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

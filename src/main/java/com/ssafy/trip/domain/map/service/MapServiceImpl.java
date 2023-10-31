@@ -1,6 +1,6 @@
 package com.ssafy.trip.domain.map.service;
 
-import com.ssafy.treep.domain.map.mapper.MapMapper;
+import com.ssafy.trip.domain.map.mapper.MapMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

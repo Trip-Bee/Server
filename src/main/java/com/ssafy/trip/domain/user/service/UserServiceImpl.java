@@ -1,6 +1,6 @@
 package com.ssafy.trip.domain.user.service;
 
-import com.ssafy.treep.domain.user.mapper.UserMapper;
+import com.ssafy.trip.domain.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
