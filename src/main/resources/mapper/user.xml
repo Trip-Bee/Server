@@ -3,9 +3,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.trip.domain.user.mapper.UserMapper">
+    <resultMap id="user" type="user">
+        <result column="profile_image" property="profileImage"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
 
     <insert id="insert" parameterType="user">
         insert into user(email, password, status, role, created_at, updated_at)
         values(#{email}, #{password}, #{status}, #{role}, now(), now())
     </insert>
+
+    <select id="selectById" parameterType="long" resultMap="user">
+        select id, email, password, profile_image, created_at, updated_at
+        from user
+        where id = ${id}
+    </select>
 </mapper>

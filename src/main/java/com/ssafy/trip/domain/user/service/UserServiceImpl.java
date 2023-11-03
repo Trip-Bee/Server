@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -22,14 +24,19 @@ public class UserServiceImpl implements UserService {
     public void signup(String email, String password) {
         password = passwordEncoder.encode(password);
 
-//        SignupDto signupDto = new SignupDto(email, password);
-
         User user = User.create(email, password);
+
 
         // TODO 추후 이미지 처리 >> 이미지 요청이 없는 경우 기본 이미지 등록
         userMapper.insert(user);
         System.out.println(email + " " + password);
     }
 
+    @Override
+    public User getUserInfo(Long userId) {
+        User user = userMapper.selectById(userId)
+                .orElseThrow(() -> new IllegalStateException());
 
+        return user;
+    }
 }

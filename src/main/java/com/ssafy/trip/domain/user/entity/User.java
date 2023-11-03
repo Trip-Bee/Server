@@ -1,13 +1,12 @@
 package com.ssafy.trip.domain.user.entity;
 
 import com.ssafy.trip.global.entity.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
 public class User extends BaseEntity {
     private Long id;
@@ -17,11 +16,25 @@ public class User extends BaseEntity {
     private String profileImage;
     private Role role;
 
-
     public enum Status {
         MEMBER,
         WITHDRAWAL
     }
+
+    public enum Role {
+        ROLE_USER,
+        ROLE_ADMIN
+    }
+
+//    public User(Long id, String email, String password, Status status, String profileImage, Role role, LocalDateTime createdAt, LocalDateTime updatedAt) {
+//        super(createdAt, updatedAt);
+//        this.id = id;
+//        this.email = email;
+//        this.password = password;
+//        this.status = status;
+//        this.profileImage = profileImage;
+//        this.role = role;
+//    }
 
     @Builder
     private User(String email, String password, Status status, String profileImage, Role role) {

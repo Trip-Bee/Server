@@ -6,8 +6,11 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Optional;
+
 @Mapper
 public interface UserMapper {
     void insert(User user);
 
+    Optional<User> selectById(Long id);
 }
