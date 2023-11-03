@@ -2,6 +2,7 @@ package com.ssafy.trip.domain.user.controller;
 
 import com.ssafy.trip.domain.user.dto.LoginRequest;
 import com.ssafy.trip.domain.user.dto.SignupRequest;
+import com.ssafy.trip.domain.user.dto.UpdateDto;
 import com.ssafy.trip.domain.user.entity.User;
 import com.ssafy.trip.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,11 @@ public class UserController {
     public ResponseEntity getUserInfo(@PathVariable Long userId) {
         User user = userService.getUserInfo(userId);
         return ResponseEntity.ok(user);
+    }
+
+    @PatchMapping("/{userId}")
+    public ResponseEntity updateUser(@RequestBody UpdateDto updateDto) {
+        userService.updateUser(updateDto.toEntity());
+        return ResponseEntity.ok().build();
     }
 }

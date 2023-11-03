@@ -37,7 +37,8 @@ public class User extends BaseEntity {
 //    }
 
     @Builder
-    private User(String email, String password, Status status, String profileImage, Role role) {
+    public User(Long id, String email, String password, Status status, String profileImage, Role role) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.status = status;
@@ -51,6 +52,10 @@ public class User extends BaseEntity {
                 .status(Status.MEMBER)
                 .role(Role.ROLE_USER)
                 .build();
+    }
+
+    public void updatePassowrd(String password) {
+        this.password = password;
     }
 
 }

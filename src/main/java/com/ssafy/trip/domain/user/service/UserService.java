@@ -10,4 +10,6 @@ public interface UserService {
     void signup(String email, String password);
 
     User getUserInfo(Long userId);
+
+    void updateUser(User user);
 }

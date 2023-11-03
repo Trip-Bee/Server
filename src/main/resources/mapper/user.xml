@@ -19,4 +19,16 @@
         from user
         where id = ${id}
     </select>
+
+    <update id="update" parameterType="user">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="email != null">email = #{email},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="profileImage != null">profile_image = #{profileImage},</if>
+            updated_at = now()
+        </trim>
+        where id = #{id}
+    </update>
+
 </mapper>
