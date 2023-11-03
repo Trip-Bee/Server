@@ -1,13 +1,13 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ssafyweb?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/tripbee?serverTimezone=UTC
     username: ssafy
     password: ssafy
 #    type: org.apache.commons.dbcp2.BasicDataSource
 
 mybatis:
-  type-aliases-package: com.ssafy.*.domain.*.dto
+  type-aliases-package: com.ssafy.*.domain.*.dto, com.ssafy.*.domain.*.entity
   mapper-locations: mapper/*.xml
 
 logging:
