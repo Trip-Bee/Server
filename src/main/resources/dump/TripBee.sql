@@ -36,7 +36,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `tripbee`.`post` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(30) NULL,
-  `category` VARCHAR(3) NULL,
+  `category` VARCHAR(30) NULL,
   `content` MEDIUMTEXT NULL,
   `is_deleted` TINYINT NULL,
   `hit` BIGINT NULL,
