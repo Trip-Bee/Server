@@ -12,4 +12,6 @@ public interface UserMapper {
     Optional<User> selectById(Long id);
 
     void update(User user);
+
+    void updateUserStatus(Long id, User.Status status);
 }

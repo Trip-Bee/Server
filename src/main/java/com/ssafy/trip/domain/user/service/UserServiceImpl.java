@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService {
     public void login (String email, String password) {
     }
 
+    @Transactional
     @Override
     public void signup(String email, String password) {
         password = passwordEncoder.encode(password);
@@ -37,7 +38,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
     @Transactional
     @Override
     public void updateUser(User user) {
@@ -47,5 +47,10 @@ public class UserServiceImpl implements UserService {
         user.updatePassowrd(password);
 
         userMapper.update(user);
+    }
+
+    @Override
+    public void updateStatus(Long userId) {
+        userMapper.updateUserStatus(userId, User.Status.WITHDRAWAL);
     }
 }

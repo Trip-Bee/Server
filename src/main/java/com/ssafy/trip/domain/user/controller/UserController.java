@@ -41,4 +41,10 @@ public class UserController {
         userService.updateUser(updateDto.toEntity());
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity withdraw(@PathVariable Long userId) {
+        userService.updateStatus(userId);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -12,4 +12,6 @@ public interface UserService {
     User getUserInfo(Long userId);
 
     void updateUser(User user);
+
+    void updateStatus(Long userId);
 }

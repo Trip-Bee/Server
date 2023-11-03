@@ -31,4 +31,9 @@
         where id = #{id}
     </update>
 
+    <update id="updateUserStatus">
+        update user
+        set status = #{status}, updated_at = now()
+        where id=${id}
+    </update>
 </mapper>
