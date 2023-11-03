@@ -4,4 +4,8 @@
 
 <mapper namespace="com.ssafy.trip.domain.user.mapper.UserMapper">
 
+    <insert id="insert" parameterType="user">
+        insert into user(email, password, status, role, created_at, updated_at)
+        values(#{email}, #{password}, #{status}, #{role}, now(), now())
+    </insert>
 </mapper>

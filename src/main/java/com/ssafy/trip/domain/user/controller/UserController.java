@@ -1,6 +1,7 @@
 package com.ssafy.trip.domain.user.controller;
 
 import com.ssafy.trip.domain.user.dto.LoginRequest;
+import com.ssafy.trip.domain.user.dto.SignupRequest;
 import com.ssafy.trip.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +21,9 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity signup() {
-
-
-        return null;
+    public ResponseEntity signup(@RequestBody SignupRequest signupRequest) {
+        userService.signup(signupRequest.getEmail(), signupRequest.getPassword());
+        return ResponseEntity.ok().build();
     }
 
 
