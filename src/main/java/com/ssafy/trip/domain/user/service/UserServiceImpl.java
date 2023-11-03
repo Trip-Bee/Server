@@ -8,4 +8,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
+
+    public void login (String email, String password) {
+
+    }
 }
