@@ -9,7 +9,9 @@ import java.util.Optional;
 public interface UserMapper {
     void insert(User user);
 
-    Optional<User> selectById(Long id);
+    Optional<User> findById(Long id);
+
+    Optional<User> findByEmail(String email);
 
     void update(User user);
 

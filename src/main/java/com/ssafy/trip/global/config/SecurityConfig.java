@@ -1,13 +1,20 @@
 package com.ssafy.trip.global.config;
 
+import com.ssafy.trip.global.jwt.security.JwtAuthenticationFilter;
+import com.ssafy.trip.global.jwt.service.JwtService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -16,17 +23,38 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
+    private final JwtService jwtService;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws  Exception {
-        http.httpBasic().disable()
-                .formLogin().disable()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.authorizeRequests((authz) ->
+                authz.anyRequest().permitAll());
 
-        http.authorizeRequests()
-                .anyRequest().permitAll();
+        http.sessionManagement((sessionManagement) ->
+                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.cors((corsConfigurer) ->
+                        corsConfigurer.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(Customizer.withDefaults());
+//                .httpBasic(AbstractHttpConfigurer::disable)
+
+        http.formLogin(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable);
+
+//        http.headers((headerConfig) ->
+//                headerConfig.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));   //
+
+//        http.exceptionHandling((exceptionHandling) ->
+//                exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+//                        .accessDeniedHandler(jwtAccessDeniedHandler));
+
+//        http.addFilterBefore(exceptionHandlerFilter(), JwtAuthenticationFilter.class);
+
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -45,6 +73,11 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter(jwtService);
     }
 
     @Bean

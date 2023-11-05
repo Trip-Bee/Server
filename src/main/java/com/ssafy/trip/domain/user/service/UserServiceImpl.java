@@ -2,6 +2,8 @@ package com.ssafy.trip.domain.user.service;
 
 import com.ssafy.trip.domain.user.entity.User;
 import com.ssafy.trip.domain.user.mapper.UserMapper;
+import com.ssafy.trip.global.error.exception.UserException;
+import com.ssafy.trip.global.jwt.dto.TokenUserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,19 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void login (String email, String password) {
+    public TokenUserInfoDto login (String email, String password) {
+        User user = userMapper.findByEmail(email).orElseThrow(() -> new UserException());
+        String savedPassword = user.getPassword();
+
+        if (!passwordEncoder.matches(password, savedPassword)) {
+            throw new UserException();
+        }
+
+        return TokenUserInfoDto.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .role(user.getRole().toString())
+                .build();
     }
 
     @Transactional
@@ -32,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserInfo(Long userId) {
-        User user = userMapper.selectById(userId)
+        User user = userMapper.findById(userId)
                 .orElseThrow(() -> new IllegalStateException());
 
         return user;

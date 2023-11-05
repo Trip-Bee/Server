@@ -14,10 +14,16 @@
         values(#{email}, #{password}, #{status}, #{role}, now(), now())
     </insert>
 
-    <select id="selectById" parameterType="long" resultMap="user">
+    <select id="findById" parameterType="long" resultMap="user">
         select id, email, password, profile_image, created_at, updated_at
         from user
         where id = ${id}
+    </select>
+
+    <select id="findByEmail" parameterType="string" resultMap="user">
+        select id, email, password, profile_image, role, created_at, updated_at
+        from user
+        where email = #{email}
     </select>
 
     <update id="update" parameterType="user">

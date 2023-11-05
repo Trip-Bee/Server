@@ -1,11 +1,10 @@
 package com.ssafy.trip.domain.user.service;
 
 import com.ssafy.trip.domain.user.entity.User;
-
-import java.util.Optional;
+import com.ssafy.trip.global.jwt.dto.TokenUserInfoDto;
 
 public interface UserService {
-    void login(String email, String password);
+    TokenUserInfoDto login(String email, String password);
 
     void signup(String email, String password);
 

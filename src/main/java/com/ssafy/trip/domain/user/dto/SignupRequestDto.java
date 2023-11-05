@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-public class SignupRequest {
+public class SignupRequestDto {
     private String email;
     private String password;
 
