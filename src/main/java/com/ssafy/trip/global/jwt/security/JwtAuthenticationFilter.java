@@ -30,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwt = getJwtToken(request);
-
+        checkBlackList(jwt);
         authenticate(request, jwt);
 
         filterChain.doFilter(request, response);
@@ -47,6 +47,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         return null;
+    }
+
+    private void checkBlackList(String jwt) {
+        if (jwt != null && jwtService.isBlack(jwt)) {
+            throw new TokenException();
+        }
     }
 
     private void authenticate(HttpServletRequest request, String jwt) {

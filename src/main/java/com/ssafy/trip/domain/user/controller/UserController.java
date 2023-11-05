@@ -38,6 +38,16 @@ public class UserController {
         return ResponseEntity.ok(loginResponseDto);
     }
 
+    @PostMapping("/logout")
+    @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity logout(@RequestHeader("Authorization") String token) {
+//        Long expiration = jwtService.calculateExpiration(token);
+//        userService.logout(token, expiration);
+        jwtService.addBlackList(token);
+
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/{userId}")
 //  TODO 권한체크, 본인확인 >> 토큰에 저장된 id값과 경로에 포함된 id값이 동일한 사용자만 허용
 //    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == principal.id)")
