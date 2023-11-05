@@ -6,6 +6,7 @@ import com.ssafy.trip.global.jwt.dto.TokenUserInfoDto;
 public interface UserService {
     TokenUserInfoDto login(String email, String password);
 
+    void logout(String token, Long expiration);
     void signup(String email, String password);
 
     User getUserInfo(Long userId);

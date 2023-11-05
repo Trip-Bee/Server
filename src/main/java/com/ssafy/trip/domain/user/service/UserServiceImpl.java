@@ -31,6 +31,11 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
+    @Override
+    public void logout(String token, Long expiration) {
+
+    }
+
     @Transactional
     @Override
     public void signup(String email, String password) {

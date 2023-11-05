@@ -7,4 +7,8 @@ import lombok.NonNull;
 public interface JwtService {
     TokenDto issueToken(@NonNull TokenUserInfoDto info);
     TokenUserInfoDto parseAccessToken(@NonNull String accessToken);
+
+    void addBlackList(@NonNull String accessToken);
+
+    boolean isBlack(String jwt);
 }
