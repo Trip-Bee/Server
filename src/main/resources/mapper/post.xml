@@ -27,7 +27,7 @@
             <if test="category != null and category != ''">
                 and category = #{category}
             </if>
-            <if test="writer_id != null and writer_id != ''">
+            <if test="writerId != null and writerId != ''">
                 and writer_id = #{writerId}
             </if>
             and is_deleted = 0
