@@ -10,8 +10,8 @@
     </resultMap>
 
     <insert id="insert" parameterType="post">
-        insert into post (writer_id, title, category, content, is_deleted, hit)
-        values (${writerId}, #{title}, #{category}, #{content}, 0, 0)
+        insert into post (writer_id, title, category, content, is_deleted, hit, created_at, updated_at)
+        values (${writerId}, #{title}, #{category}, #{content}, 0, 0, now(), now())
     </insert>
 
     <select id="findById" parameterType="long" resultMap="post">
@@ -43,17 +43,18 @@
             <if test="content != null and content != ''">
                 , content = #{content}
             </if>
+            , updated_at = now()
         </trim>
         where id = ${id}
     </update>
 
     <update id="updateHit" parameterType="long">
-        update post set hit = hit + 1
+        update post set hit = hit + 1, updated_at = now()
         where id = ${postId}
     </update>
 
     <update id="deleteById" parameterType="long">
-        update post set is_deleted = 1
+        update post set is_deleted = 1, updated_at = now()
         where id = ${postId}
     </update>
 
