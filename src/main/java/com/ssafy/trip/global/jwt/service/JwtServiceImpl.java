@@ -42,7 +42,7 @@ public class JwtServiceImpl implements JwtService {
                 .build();
     }
 
-    public TokenUserInfoDto parseAccessToken(@NonNull String accessToken) {
+    public TokenUserInfoDto parseToken(@NonNull String accessToken) {
         Claims claims = jwtParser.parseToken(accessToken, jwtUtils.getEncodedKey());
         if(claims == null) {
             return null;
@@ -64,7 +64,7 @@ public class JwtServiceImpl implements JwtService {
         // redis에서 refresh token제거
         // redis에서 access token black list처리
         accessToken = accessToken.substring(7);
-        TokenUserInfoDto info = parseAccessToken(accessToken);
+        TokenUserInfoDto info = parseToken(accessToken);
         long expiration = calculateExpiration(accessToken);
         tokenRepository.save(accessToken, "BLACK_LIST", expiration);
         tokenRepository.delete(info.getEmail());

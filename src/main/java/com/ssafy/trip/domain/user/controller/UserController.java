@@ -6,6 +6,7 @@ import com.ssafy.trip.domain.user.dto.SignupRequestDto;
 import com.ssafy.trip.domain.user.dto.UpdateDto;
 import com.ssafy.trip.domain.user.entity.User;
 import com.ssafy.trip.domain.user.service.UserService;
+import com.ssafy.trip.global.dto.Response;
 import com.ssafy.trip.global.jwt.dto.TokenDto;
 import com.ssafy.trip.global.jwt.dto.TokenUserInfoDto;
 import com.ssafy.trip.global.jwt.service.JwtService;
@@ -24,7 +25,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestBody SignupRequestDto signupRequestDto) {
         userService.signup(signupRequestDto.getEmail(), signupRequestDto.getPassword());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(Response.success());
     }
 
     @PostMapping("/login")
@@ -35,7 +36,7 @@ public class UserController {
                 .userInfo(tokenUserInfoDto)
                 .token(tokenDto)
                 .build();
-        return ResponseEntity.ok(loginResponseDto);
+        return ResponseEntity.ok(Response.success(loginResponseDto));
     }
 
     @PostMapping("/logout")
@@ -45,29 +46,29 @@ public class UserController {
 //        userService.logout(token, expiration);
         jwtService.addBlackList(token);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(Response.success());
     }
 
     @GetMapping("/{userId}")
-//  TODO 권한체크, 본인확인 >> 토큰에 저장된 id값과 경로에 포함된 id값이 동일한 사용자만 허용
-//    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == principal.id)")
     @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity getUserInfo(@PathVariable Long userId) {
         User user = userService.getUserInfo(userId);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(Response.success(user));
     }
 
     @PatchMapping("/{userId}")
+//    권한체크, 본인확인 >> 토큰에 저장된 id값과 경로에 포함된 id값이 동일한 사용자만 허용
     @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == principal.id)")
     public ResponseEntity updateUser(@PathVariable Long userId, @RequestBody UpdateDto updateDto) {
         userService.updateUser(updateDto.toEntity());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(Response.success());
     }
 
     @DeleteMapping("/{userId}")
     @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#userId == principal.id)")
     public ResponseEntity withdraw(@PathVariable Long userId) {
         userService.updateStatus(userId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(Response.success());
     }
 }

@@ -1,11 +1,11 @@
 package com.ssafy.trip.global.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.trip.global.jwt.security.JwtAuthenticationFilter;
 import com.ssafy.trip.global.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -28,8 +28,10 @@ import java.util.Arrays;
 public class SecurityConfig {
 
     private final JwtService jwtService;
+    private final ObjectMapper objectMapper;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws  Exception {
+
         http.authorizeRequests((authz) ->
                 authz.anyRequest().permitAll());
 
@@ -39,24 +41,23 @@ public class SecurityConfig {
         http.cors((corsConfigurer) ->
                         corsConfigurer.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .httpBasic(Customizer.withDefaults());
-//                .httpBasic(AbstractHttpConfigurer::disable)
+//                .httpBasic(Customizer.withDefaults());
+                .httpBasic(AbstractHttpConfigurer::disable);
 
         http.formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable);
 
 //        http.headers((headerConfig) ->
 //                headerConfig.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));   //
-
-//        http.exceptionHandling((exceptionHandling) ->
-//                exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint)
-//                        .accessDeniedHandler(jwtAccessDeniedHandler));
-
-//        http.addFilterBefore(exceptionHandlerFilter(), JwtAuthenticationFilter.class);
-
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
+
         return http.build();
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter(jwtService, objectMapper);
     }
 
     @Bean
@@ -73,11 +74,6 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
-    }
-
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter(jwtService);
     }
 
     @Bean
