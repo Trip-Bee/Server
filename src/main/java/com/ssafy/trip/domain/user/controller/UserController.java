@@ -37,4 +37,12 @@ public class UserController {
         userService.updateStatus(userId);
         return ResponseEntity.ok(Response.success());
     }
+
+//    TODO pw변경
+//    Mail에 pw변경화면이 있는 프론트 url전송
+//    프론트 url?token=accessToken 형태로 전달됨
+//    프론트의 pw변경화면 부분에서 token획득
+//    token이 없다면 login페이지든 다른 페이지로 이동
+//    token이 있다면 해당 토큰을 이용하여 사용자가 입력한 pw를 서버로 전달할때 헤더에 넣어서 전달해줌
+
 }
