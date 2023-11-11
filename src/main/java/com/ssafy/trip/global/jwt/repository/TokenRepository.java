@@ -1,12 +1,15 @@
 package com.ssafy.trip.global.jwt.repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class TokenRepository {
@@ -26,7 +29,14 @@ public class TokenRepository {
         if (expiresMin > 0) {
             redisTemplate.opsForValue().set(key, value, Duration.ofMinutes(expiresMin));
             redisTemplate.expire(key, expiresMin, TimeUnit.MINUTES); // 만료 시간 설정
+            log.debug("key, value 저장완료");
         }
+    }
+
+    public Optional<String> find(String key) {
+        String value = redisTemplate.opsForValue().get(key);
+
+        return Optional.ofNullable(value);
     }
 
     public void delete(final String key) {

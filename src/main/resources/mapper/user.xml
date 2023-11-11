@@ -15,7 +15,7 @@
     </insert>
 
     <select id="findById" parameterType="long" resultMap="user">
-        select id, email, password, profile_image, created_at, updated_at
+        select id, email, password, profile_image, created_at, updated_at, role
         from user
         where id = ${id}
     </select>

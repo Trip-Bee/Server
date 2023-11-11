@@ -1,11 +1,11 @@
 package com.ssafy.trip.global.jwt.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.trip.domain.user.dto.LoginActiveUserDto;
+import com.ssafy.trip.domain.user.dto.LoginUserDto;
 import com.ssafy.trip.global.dto.Response;
 import com.ssafy.trip.global.error.exception.ExceptionType;
 import com.ssafy.trip.global.error.exception.TokenException;
-import com.ssafy.trip.global.jwt.dto.TokenUserInfoDto;
+import com.ssafy.trip.global.jwt.dto.UserInfoDto;
 import com.ssafy.trip.global.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -77,16 +77,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean authenticate(HttpServletResponse response, String jwt) throws IOException {
-        TokenUserInfoDto tokenUserInfoDto = null;
+        UserInfoDto userInfoDto = null;
         log.debug("jwt : {}", jwt);
 
         if (StringUtils.hasText(jwt)) {
             // jwt 파싱
             // claim에서 꺼낸 정보를 통해 AuthenticationToken을 생성 후 SecurityContext에 저장
             try {
-                tokenUserInfoDto = jwtService.parseToken(jwt);
-                LoginActiveUserDto loginActiveUserDto = LoginActiveUserDto.from(tokenUserInfoDto);
-                saveLoginUserInSecurityContext(loginActiveUserDto);
+                LoginUserDto loginUserDto = jwtService.parseAccessToken(jwt);
+                saveLoginUserInSecurityContext(loginUserDto);
             } catch (TokenException ex) {
                 SecurityContextHolder.clearContext();
                 log.info(ex.getMessage());
@@ -114,10 +113,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         writer.flush();
     }
 
-    private static void saveLoginUserInSecurityContext(LoginActiveUserDto loginActiveUserDto) {
+    private static void saveLoginUserInSecurityContext(LoginUserDto loginUserDto) {
         JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(
-                loginActiveUserDto, "",
-                Arrays.asList(new SimpleGrantedAuthority(loginActiveUserDto.getRole()))
+                loginUserDto, "",
+                Arrays.asList(new SimpleGrantedAuthority(loginUserDto.getRole()))
         );
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
