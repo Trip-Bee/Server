@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
@@ -22,7 +23,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Transactional
     @Override
     public void updateUser(User user) {
         // Long userId를 통해 회원 조회
@@ -36,5 +36,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateStatus(Long userId) {
         userMapper.updateUserStatus(userId, User.Status.WITHDRAWAL);
+    }
+
+    @Override
+    public void updatePassword(Long userId, String password) {
+        userMapper.updatePassword(userId, passwordEncoder.encode(password));
     }
 }

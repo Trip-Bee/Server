@@ -16,4 +16,6 @@ public interface UserMapper {
     void update(User user);
 
     void updateUserStatus(Long id, User.Status status);
+
+    void updatePassword(Long id, String password);
 }
