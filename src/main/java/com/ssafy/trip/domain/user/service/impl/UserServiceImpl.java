@@ -1,7 +1,8 @@
-package com.ssafy.trip.domain.user.service;
+package com.ssafy.trip.domain.user.service.impl;
 
 import com.ssafy.trip.domain.user.entity.User;
 import com.ssafy.trip.domain.user.mapper.UserMapper;
+import com.ssafy.trip.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

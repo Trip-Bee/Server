@@ -1,7 +1,8 @@
-package com.ssafy.trip.domain.user.service;
+package com.ssafy.trip.domain.user.service.impl;
 
 import com.ssafy.trip.domain.user.entity.User;
 import com.ssafy.trip.domain.user.mapper.UserMapper;
+import com.ssafy.trip.domain.user.service.AuthService;
 import com.ssafy.trip.global.error.exception.UserException;
 import com.ssafy.trip.global.jwt.dto.TokenDto;
 import com.ssafy.trip.global.jwt.dto.UserInfoDto;
