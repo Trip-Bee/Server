@@ -42,4 +42,10 @@
         set status = #{status}, updated_at = now()
         where id=${id}
     </update>
+
+    <update id="updatePassword">
+        update user
+        set password = #{password}, updated_at = now()
+        where id = ${id}
+    </update>
 </mapper>

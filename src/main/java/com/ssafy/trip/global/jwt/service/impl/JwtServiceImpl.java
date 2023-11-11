@@ -1,4 +1,4 @@
-package com.ssafy.trip.global.jwt.service;
+package com.ssafy.trip.global.jwt.service.impl;
 
 import com.ssafy.trip.domain.user.dto.LoginUserDto;
 import com.ssafy.trip.global.error.exception.TokenException;
@@ -6,6 +6,7 @@ import com.ssafy.trip.global.jwt.JwtUtils;
 import com.ssafy.trip.global.jwt.dto.TokenDto;
 import com.ssafy.trip.global.jwt.dto.UserInfoDto;
 import com.ssafy.trip.global.jwt.repository.TokenRepository;
+import com.ssafy.trip.global.jwt.service.JwtService;
 import io.jsonwebtoken.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
