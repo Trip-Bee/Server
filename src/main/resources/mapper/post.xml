@@ -7,6 +7,8 @@
     <resultMap id="post" type="post">
         <result column="writer_id" property="writerId"></result>
         <result column="is_deleted" property="isDeleted"></result>
+        <result column="created_at" property="createdAt"></result>
+        <result column="updated_at" property="updatedAt"></result>
     </resultMap>
 
     <insert id="insert" parameterType="post">
@@ -15,23 +17,15 @@
     </insert>
 
     <select id="findById" parameterType="long" resultMap="post">
-        select id, writer_id, title, category, content, hit
-        from post
-        where id = ${postId} and is_deleted = 0
+        select p.id, p.writer_id, u.nickname, p.title, p.category, p.content, p.hit, p.created_at, p.updated_at
+        from post p join user u on p.writer_id = u.id
+        where p.id = ${postId} and p.is_deleted = 0
     </select>
 
-    <select id="findAll" parameterType="map" resultMap="post">
-        select id, writer_id, title, category, content, hit
-        from post
-        <trim prefix="where" prefixOverrides="and">
-            <if test="category != null and category != ''">
-                and category = #{category}
-            </if>
-            <if test="writerId != null and writerId != ''">
-                and writer_id = #{writerId}
-            </if>
-            and is_deleted = 0
-        </trim>
+    <select id="findAllByCategory" parameterType="String" resultMap="post">
+        select p.id, p.writer_id, u.nickname, p.title, p.category, p.content, p.hit, p.created_at, p.updated_at
+        from post p join user u on p.writer_id = u.id
+        where p.category = #{category} and p.is_deleted = 0
     </select>
 
     <update id="update" parameterType="post">

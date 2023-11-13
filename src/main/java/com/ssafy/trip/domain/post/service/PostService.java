@@ -1,19 +1,21 @@
 package com.ssafy.trip.domain.post.service;
 
-import com.ssafy.trip.domain.post.dto.PostDto;
+import com.ssafy.trip.domain.post.dto.ModifyRequestDto;
+import com.ssafy.trip.domain.post.dto.PostResponseDto;
+import com.ssafy.trip.domain.post.dto.WriteRequestDto;
 
 import java.util.List;
 import java.util.Map;
 
 public interface PostService {
 
-    void registerPost(PostDto postDto) throws Exception;
+    void writePost(String category, WriteRequestDto writeRequestDto) throws Exception;
 
-    PostDto getPost(Long postId) throws Exception;
+    PostResponseDto getPost(Long postId) throws Exception;
 
-    List<PostDto> getPosts(Map<String, String> map) throws Exception;
+    List<PostResponseDto> getPosts(String category) throws Exception;
 
-    void modifyPost(PostDto postDto) throws Exception;
+    void modifyPost(String category, ModifyRequestDto modifyRequestDto) throws Exception;
 
     void updateHit(Long postId) throws Exception;
 

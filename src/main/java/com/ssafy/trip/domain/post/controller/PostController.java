@@ -1,7 +1,10 @@
 package com.ssafy.trip.domain.post.controller;
 
-import com.ssafy.trip.domain.post.dto.PostDto;
+import com.ssafy.trip.domain.post.dto.ModifyRequestDto;
+import com.ssafy.trip.domain.post.dto.PostResponseDto;
+import com.ssafy.trip.domain.post.dto.WriteRequestDto;
 import com.ssafy.trip.domain.post.service.PostService;
+import com.ssafy.trip.global.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,44 +14,44 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/{category}/posts")
 @RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
 
     @PostMapping
-    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#postDto.writerId == principal.id)")
-    public ResponseEntity<?> registerPost(@RequestBody PostDto postDto) throws Exception {
-        postService.registerPost(postDto);
-        return ResponseEntity.ok().build();
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#writeRequestDto.writerId == principal.id)")
+    public ResponseEntity writePost(@PathVariable String category, @RequestBody WriteRequestDto writeRequestDto) throws Exception {
+        postService.writePost(category, writeRequestDto);
+        return ResponseEntity.ok(Response.success());
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<?> getPost(@PathVariable Long postId) throws Exception {
-        PostDto postDto = postService.getPost(postId);
+    public ResponseEntity getPost(@PathVariable Long postId) throws Exception {
+        PostResponseDto postResponseDto = postService.getPost(postId);
         postService.updateHit(postId);
-        return ResponseEntity.ok().body(postDto);
+        return ResponseEntity.ok(Response.success(postResponseDto));
     }
 
     @GetMapping
-    public ResponseEntity<?> getPosts(@RequestParam Map<String, String> map) throws Exception {
-        List<PostDto> list = postService.getPosts(map);
-        return ResponseEntity.ok().body(list);
+    public ResponseEntity getPosts(@PathVariable String category) throws Exception {
+        List<PostResponseDto> list = postService.getPosts(category);
+        return ResponseEntity.ok(Response.success(list));
     }
 
-    @PatchMapping("/{writerId}/{postId}")
-    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#writerId == principal.id)")
-    public ResponseEntity<?> modifyPost(@PathVariable Long writerId, @PathVariable Long postId, @RequestBody PostDto postDto) throws Exception {
-        postService.modifyPost(postDto);
-        return ResponseEntity.ok().build();
+    @PatchMapping("/{postId}")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#modifyRequestDto.writerId == principal.id)")
+    public ResponseEntity modifyPost(@PathVariable String category, @RequestBody ModifyRequestDto modifyRequestDto) throws Exception {
+        postService.modifyPost(category, modifyRequestDto);
+        return ResponseEntity.ok(Response.success());
     }
 
-    @DeleteMapping("/{writerId}/{postId}")
-    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#writerId == principal.id)")
-    public ResponseEntity<?> deletePost(@PathVariable Long writerId, @PathVariable Long postId) throws Exception {
+    @DeleteMapping("/{postId}")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN'))")
+    public ResponseEntity deletePost(@PathVariable Long postId) throws Exception {
         postService.deletePost(postId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(Response.success());
     }
 
 }
