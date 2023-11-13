@@ -11,7 +11,6 @@ public class LikeServiceImpl implements LikeService {
 
     private final LikeMapper likeMapper;
 
-
     @Override
     public void addLike(LikeDto likeDto) throws Exception {
         likeMapper.insert(likeDto.toEntity());

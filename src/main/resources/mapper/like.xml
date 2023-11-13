@@ -7,6 +7,8 @@
     <resultMap id="like" type="like">
         <result column="user_id" property="userId"></result>
         <result column="spot_id" property="spotId"></result>
+        <result column="created_at" property="createdAt"></result>
+        <result column="updated_at" property="updatedAt"></result>
     </resultMap>
 
     <insert id="insert" parameterType="comment">
