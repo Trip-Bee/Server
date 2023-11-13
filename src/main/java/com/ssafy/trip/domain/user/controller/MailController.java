@@ -2,6 +2,7 @@ package com.ssafy.trip.domain.user.controller;
 
 import com.ssafy.trip.domain.user.dto.EmailRequestDto;
 import com.ssafy.trip.domain.user.service.MailService;
+import com.ssafy.trip.global.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,6 @@ public class MailController {
     public ResponseEntity sendPasswordChangeLink(@RequestBody EmailRequestDto emailRequestDto) {
         mailService.sendPasswordEmail(emailRequestDto.getEmail());
 
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(Response.success());
     }
 }

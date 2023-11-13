@@ -1,5 +1,6 @@
 package com.ssafy.trip.domain.user.service.impl;
 
+import com.ssafy.trip.domain.user.dto.SignupRequestDto;
 import com.ssafy.trip.domain.user.entity.User;
 import com.ssafy.trip.domain.user.mapper.UserMapper;
 import com.ssafy.trip.domain.user.service.AuthService;
@@ -40,15 +41,13 @@ public class AuthServiceImpl implements AuthService {
 
     @Transactional
     @Override
-    public void signup(String email, String password) {
-        password = passwordEncoder.encode(password);
+    public void signup(User user) {
+        String password = passwordEncoder.encode(user.getPassword());
 
-        User user = User.create(email, password);
-
+        user.updatePassowrd(password);
 
         // TODO 추후 이미지 처리 >> 이미지 요청이 없는 경우 기본 이미지 등록
         userMapper.insert(user);
-        System.out.println(email + " " + password);
     }
 
     @Override

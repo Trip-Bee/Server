@@ -10,11 +10,13 @@ import com.ssafy.trip.global.error.exception.UserException;
 import com.ssafy.trip.global.jwt.dto.UserInfoDto;
 import com.ssafy.trip.global.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
@@ -28,8 +30,10 @@ public class MailServiceImpl implements MailService {
         UserInfoDto userInfo = UserInfoDto.from(user);
         String accessToken = jwtService.issueAccessToken(userInfo);
 
+        log.debug("access token : {}", accessToken);
         String targetUrl = "프론트엔드 url?token=";
         String link = targetUrl + accessToken;
+        log.debug("link : {}", link);
 
         Map<String, Object> contents = new HashMap<>();
         contents.put("link", link);

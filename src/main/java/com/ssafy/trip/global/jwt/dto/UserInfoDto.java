@@ -14,12 +14,17 @@ public class UserInfoDto {
     private Long id;
     private String email;
     private String role;
+    private String nickname;
+    private String profileImage;
 
     public static UserInfoDto from(User user) {
         return UserInfoDto.builder()
                 .id(user.getId())
                 .email(user.getEmail())
+                .nickname(user.getNickname())
+                .profileImage(user.getProfileImage())
                 .role(user.getRole().name())
                 .build();
     }
+
 }

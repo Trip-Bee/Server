@@ -14,6 +14,7 @@ public class UpdateDto {
     private Long id;
     private String email;
     private String password;
+    private String nickname;
     private String profileImage;
 
     public User toEntity() {
@@ -21,6 +22,7 @@ public class UpdateDto {
                 .id(id)
                 .email(email)
                 .password(password)
+                .nickname(nickname)
                 .profileImage(profileImage)
                 .build();
     }
