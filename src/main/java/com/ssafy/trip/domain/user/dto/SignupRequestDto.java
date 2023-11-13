@@ -1,5 +1,6 @@
 package com.ssafy.trip.domain.user.dto;
 
+import com.ssafy.trip.domain.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -10,7 +11,10 @@ import lombok.ToString;
 public class SignupRequestDto {
     private String email;
     private String password;
+    private String nickname;
+    private String profileImage;
 
-//  프로필 이미지
-//    private String profileImage;
+    public User toEntity() {
+        return User.create(email, password, nickname, profileImage);
+    }
 }

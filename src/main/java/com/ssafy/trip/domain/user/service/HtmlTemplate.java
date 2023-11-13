@@ -20,7 +20,7 @@ public class HtmlTemplate {
 
 		context.setVariables(contents);
 
-		log.info("=========== templateEngine class: {}", templateEngine.getClass()); // SpringTemplateEngine
+//		log.info("=========== templateEngine class: {}", templateEngine.getClass()); // SpringTemplateEngine
 
 		return templateEngine.process(template, context);
 	}

@@ -10,18 +10,18 @@
     </resultMap>
 
     <insert id="insert" parameterType="user">
-        insert into user(email, password, status, role, created_at, updated_at)
-        values(#{email}, #{password}, #{status}, #{role}, now(), now())
+        insert into user(email, password, nickname, profile_image, status, role, created_at, updated_at)
+        values(#{email}, #{password}, #{nickname}, #{profileImage}, #{status}, #{role}, now(), now())
     </insert>
 
     <select id="findById" parameterType="long" resultMap="user">
-        select id, email, password, profile_image, created_at, updated_at, role
+        select id, email, password, nickname, profile_image, created_at, updated_at, role
         from user
         where id = ${id}
     </select>
 
     <select id="findByEmail" parameterType="string" resultMap="user">
-        select id, email, password, profile_image, role, created_at, updated_at
+        select id, email, password, nickname, profile_image, role, created_at, updated_at
         from user
         where email = #{email}
     </select>
@@ -31,6 +31,7 @@
         <trim prefix="set" suffixOverrides=",">
             <if test="email != null">email = #{email},</if>
             <if test="password != null">password = #{password},</if>
+            <if test="nickname != null">nickname = #{nickname},</if>
             <if test="profileImage != null">profile_image = #{profileImage},</if>
             updated_at = now()
         </trim>

@@ -32,9 +32,10 @@ public class JwtServiceImpl implements JwtService {
 
     private static final String CLAIM_EMAIL = "email";
 
-//    private static final String CLAIM_NICKNAME = "nickname";
+    private static final String CLAIM_NICKNAME = "nickname";
+
+    private static final String CLAIM_PROFILE_IMAGE = "profileImage";
     private static final String CLAIM_ROLE = "role";
-    private static final String CLAIM_PROFILE_IMG = "profileImg";
 
     public String issueAccessToken(@NonNull UserInfoDto info) {
         Claims claims = Jwts.claims()
@@ -42,6 +43,8 @@ public class JwtServiceImpl implements JwtService {
 
         claims.put(CLAIM_EMAIL, info.getEmail());
         claims.put(CLAIM_ROLE, info.getRole());
+        claims.put(CLAIM_NICKNAME, info.getNickname());
+        claims.put(CLAIM_PROFILE_IMAGE, info.getProfileImage());
         return issueToken(claims, jwtUtils.getAccessTokenExpiredMin(), jwtUtils.getEncodedKey());
     }
 
@@ -79,6 +82,8 @@ public class JwtServiceImpl implements JwtService {
                 .id(Long.valueOf(payload.getId()))
                 .email(payload.get(CLAIM_EMAIL, String.class))
                 .role(payload.get(CLAIM_ROLE, String.class))
+                .nickname(payload.get(CLAIM_NICKNAME, String.class))
+                .profileImage(payload.get(CLAIM_PROFILE_IMAGE, String.class))
                 .build();
     }
 

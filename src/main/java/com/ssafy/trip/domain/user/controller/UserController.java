@@ -53,6 +53,6 @@ public class UserController {
                                          @RequestBody PasswordRequestDto passwordRequestDto) {
         userService.updatePassword(loginUserDto.getId(), passwordRequestDto.getPassword());
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(Response.success());
     }
 }
