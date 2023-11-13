@@ -1,8 +1,8 @@
 package com.ssafy.trip.domain.post.controller;
 
-import com.ssafy.trip.domain.post.dto.ModifyRequestDto;
+import com.ssafy.trip.domain.post.dto.ModifyPostRequestDto;
 import com.ssafy.trip.domain.post.dto.PostResponseDto;
-import com.ssafy.trip.domain.post.dto.WriteRequestDto;
+import com.ssafy.trip.domain.post.dto.WritePostRequestDto;
 import com.ssafy.trip.domain.post.service.PostService;
 import com.ssafy.trip.global.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/{category}/posts")
@@ -22,8 +21,8 @@ public class PostController {
 
     @PostMapping
     @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#writeRequestDto.writerId == principal.id)")
-    public ResponseEntity writePost(@PathVariable String category, @RequestBody WriteRequestDto writeRequestDto) throws Exception {
-        postService.writePost(category, writeRequestDto);
+    public ResponseEntity writePost(@PathVariable String category, @RequestBody WritePostRequestDto writePostRequestDto) throws Exception {
+        postService.writePost(category, writePostRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 
@@ -42,8 +41,8 @@ public class PostController {
 
     @PatchMapping("/{postId}")
     @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#modifyRequestDto.writerId == principal.id)")
-    public ResponseEntity modifyPost(@PathVariable String category, @RequestBody ModifyRequestDto modifyRequestDto) throws Exception {
-        postService.modifyPost(category, modifyRequestDto);
+    public ResponseEntity modifyPost(@PathVariable String category, @RequestBody ModifyPostRequestDto modifyPostRequestDto) throws Exception {
+        postService.modifyPost(category, modifyPostRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 

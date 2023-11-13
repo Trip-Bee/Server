@@ -1,11 +1,12 @@
 package com.ssafy.trip.domain.post.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
-@Setter
-public class WriteRequestDto {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
+public class WritePostRequestDto {
 
     private Long writerId;
     private String title;

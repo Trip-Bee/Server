@@ -1,7 +1,7 @@
 package com.ssafy.trip.domain.post.controller;
 
-import com.ssafy.trip.domain.post.dto.ModifyRequestDto;
-import com.ssafy.trip.domain.post.dto.WriteRequestDto;
+import com.ssafy.trip.domain.post.dto.ModifyPostRequestDto;
+import com.ssafy.trip.domain.post.dto.WritePostRequestDto;
 import com.ssafy.trip.domain.post.service.PostService;
 import com.ssafy.trip.global.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +19,15 @@ public class NoticeController {
 
     @PostMapping
     @PreAuthorize("(hasAuthority('ROLE_ADMIN')) and (#writeRequestDto.writerId == principal.id)")
-    public ResponseEntity writeNotice(@RequestBody WriteRequestDto writeRequestDto) throws Exception {
-        postService.writePost(CATEGORY, writeRequestDto);
+    public ResponseEntity writeNotice(@RequestBody WritePostRequestDto writePostRequestDto) throws Exception {
+        postService.writePost(CATEGORY, writePostRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 
     @PatchMapping("/{postId}")
     @PreAuthorize("(hasAuthority('ROLE_ADMIN')) and (#modifyRequestDto.writerId == principal.id)")
-    public ResponseEntity modifyNotice(@RequestBody ModifyRequestDto modifyRequestDto) throws Exception {
-        postService.modifyPost(CATEGORY, modifyRequestDto);
+    public ResponseEntity modifyNotice(@RequestBody ModifyPostRequestDto modifyPostRequestDto) throws Exception {
+        postService.modifyPost(CATEGORY, modifyPostRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 

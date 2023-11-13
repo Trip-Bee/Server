@@ -1,14 +1,13 @@
 package com.ssafy.trip.domain.post.dto;
 
 import com.ssafy.trip.domain.post.entity.Post;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Builder
 public class PostResponseDto {
 
