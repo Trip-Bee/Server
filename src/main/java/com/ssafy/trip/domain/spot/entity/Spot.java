@@ -1,6 +1,6 @@
 package com.ssafy.trip.domain.spot.entity;
 
-import com.ssafy.trip.domain.spot.dto.SpotDto;
+import com.ssafy.trip.domain.spot.dto.SearchResponseDto;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -24,8 +24,8 @@ public class Spot {
     private Long sidoCode;
     private Long gugunCode;
 
-    public SpotDto toDto() {
-        return SpotDto.builder()
+    public SearchResponseDto toDto() {
+        return SearchResponseDto.builder()
                 .id(id)
                 .typeId(typeId)
                 .title(title)
