@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/vehicles")
 public class VehicleController {
-    private VehicleService vehicleService;
+    private final VehicleService vehicleService;
 
     @GetMapping()
     public ResponseEntity getVehicles() {
