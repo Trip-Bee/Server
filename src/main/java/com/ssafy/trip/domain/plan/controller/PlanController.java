@@ -48,8 +48,6 @@ public class PlanController {
         // spot >> 여행지명, 사진
         // user >> nickname
 
-
-
         return ResponseEntity.ok(Response.success());
     }
 
