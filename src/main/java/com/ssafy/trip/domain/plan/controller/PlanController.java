@@ -1,5 +1,6 @@
 package com.ssafy.trip.domain.plan.controller;
 
+import com.ssafy.trip.domain.plan.dto.PlanDetailsDto;
 import com.ssafy.trip.domain.plan.dto.PlanDto;
 import com.ssafy.trip.domain.plan.dto.PlanRequestDto;
 import com.ssafy.trip.domain.plan.service.PlanService;
@@ -47,8 +48,9 @@ public class PlanController {
         // vehicle >> name
         // spot >> 여행지명, 사진
         // user >> nickname
+        PlanDetailsDto planDetailsDto = planService.getPlan(planId);
 
-        return ResponseEntity.ok(Response.success());
+        return ResponseEntity.ok(Response.success(planDetailsDto));
     }
 
 }
