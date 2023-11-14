@@ -11,6 +11,10 @@ public class Theme {
     private Long id;
     private String name;
 
+    public Theme(String name) {
+        this.name = name;
+    }
+
     public static Theme create(Long id, String name) {
         return new Theme(id, name);
     }

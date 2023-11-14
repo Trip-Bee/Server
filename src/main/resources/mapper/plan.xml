@@ -4,6 +4,34 @@
 
 <mapper namespace="com.ssafy.trip.domain.plan.mapper.PlanMapper">
 
+    <select id="findByName" parameterType="string">
+        select id, name
+        from theme
+        where name = #{name}
+    </select>
 
+    <insert id="saveTheme" parameterType="Theme">
+        insert into theme(name)
+        values(#{name})
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <insert id="savePlan" parameterType="Plan">
+        insert into plan(user_id, theme_id, title, total_cost, start_date, end_date, head_count)
+        values(${writerId}, ${themeId}, #{title}, ${totalCost}, #{startDate}, #{endDate}, ${headCount})
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <insert id="savePlanDetails" parameterType="java.util.Map">
+        insert into plan_details(`order`, cost, plan_id, spot_id, vehicle_id)
+        values
+        <foreach collection="list" item="detail" separator=",">
+            (${detail.order}, ${detail.cost}, ${detail.planId}, ${detail.spotId}, ${detail.vehicleId})
+        </foreach>
+    </insert>
 
 </mapper>

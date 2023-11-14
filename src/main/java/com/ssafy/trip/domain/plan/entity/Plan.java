@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -14,17 +15,20 @@ import java.time.LocalDateTime;
 public class Plan {
     private Long id;
     // FK
-    private Long userId;
-    private Long theme_id;
+    private Long writerId;
+    private Long themeId;
 
     private String title;
     private Long totalCost;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    private int head_count;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private int headCount;
     private Long hit;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    public void addTheme(Long themeId) {
+        this.themeId = themeId;
+    }
 }
