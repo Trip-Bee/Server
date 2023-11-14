@@ -37,7 +37,8 @@ public class GlobalExceptionAdvice {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity methodArgumentTypeMismatchException(
-            MethodArgumentTypeMismatchException e) {
+            MethodArgumentTypeMismatchException ex) {
+        log.warn("ex : {}", ex.getStackTrace());
         return ResponseEntity.badRequest()
                 .body(Response.fail(HttpStatus.BAD_REQUEST.name(), "잘못된 요청입니다."));
     }
@@ -45,6 +46,7 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity handleDefaultExcpeiton(Exception ex) {
 
+        log.warn("ex : {}", ex.getStackTrace());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Response.fail(HttpStatus.BAD_REQUEST.name(), "기본 에러"));
     }
