@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS `tripbee`.`user` (
   `status` VARCHAR(20) NULL DEFAULT NULL,
   `role` VARCHAR(20) NULL DEFAULT NULL,
   `profile_image` VARCHAR(255) NULL DEFAULT NULL,
-  `created_at` TIMESTAMP NULL DEFAULT NULL,
-  `updated_at` TIMESTAMP NULL DEFAULT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
@@ -43,10 +43,10 @@ CREATE TABLE IF NOT EXISTS `tripbee`.`post` (
   `title` VARCHAR(30) NULL DEFAULT NULL,
   `category` VARCHAR(30) NULL DEFAULT NULL,
   `content` MEDIUMTEXT NULL DEFAULT NULL,
-  `is_deleted` TINYINT NULL DEFAULT NULL,
-  `hit` BIGINT NULL DEFAULT NULL,
-  `created_at` TIMESTAMP NULL DEFAULT NULL,
-  `updated_at` TIMESTAMP NULL DEFAULT NULL,
+  `is_deleted` TINYINT NULL DEFAULT 0,
+  `hit` BIGINT NULL DEFAULT 0,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `writer_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_post_user_idx` (`writer_id` ASC) VISIBLE,
@@ -63,11 +63,11 @@ DEFAULT CHARACTER SET = utf8mb4;
 CREATE TABLE IF NOT EXISTS `tripbee`.`comment` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `content` VARCHAR(255) NULL DEFAULT NULL,
-  `created_at` TIMESTAMP NULL DEFAULT NULL,
-  `updated_at` TIMESTAMP NULL DEFAULT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `post_id` BIGINT NOT NULL,
   `writer_id` BIGINT NOT NULL,
-  `is_deleted` TINYINT NULL,
+  `is_deleted` TINYINT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   INDEX `fk_comment_post1_idx` (`post_id` ASC) VISIBLE,
   INDEX `fk_comment_user1_idx` (`writer_id` ASC) VISIBLE,
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `tripbee`.`spot_type` (
   `name` VARCHAR(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -159,8 +159,8 @@ ALTER TABLE `tripbee`.`spot` ADD FOREIGN KEY (`gugun_code`) REFERENCES `tripbee`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tripbee`.`like` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `created_at` TIMESTAMP NULL DEFAULT NULL,
-  `updated_at` TIMESTAMP NULL DEFAULT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` BIGINT NOT NULL,
   `spot_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `tripbee`.`theme` (
   `name` VARCHAR(30) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -193,13 +193,13 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `tripbee`.`plan` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(30) NULL,
-  `total_cost` BIGINT NULL DEFAULT NULL,
-  `start_date` TIMESTAMP NULL DEFAULT NULL,
-  `end_date` TIMESTAMP NULL DEFAULT NULL,
+  `total_cost` BIGINT NULL DEFAULT 0,
+  `start_date` DATE NULL DEFAULT (CURRENT_DATE),
+  `end_date` DATE NULL DEFAULT (CURRENT_DATE),
   `head_count` INT NULL DEFAULT NULL,
-  `hit` BIGINT NULL,
-  `created_at` TIMESTAMP NULL DEFAULT NULL,
-  `updated_at` TIMESTAMP NULL DEFAULT NULL,
+  `hit` BIGINT NULL DEFAULT 0,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` BIGINT NOT NULL,
   `theme_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
@@ -234,9 +234,9 @@ DEFAULT CHARACTER SET = utf8mb4;
 CREATE TABLE IF NOT EXISTS `tripbee`.`plan_details` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `order` INT NULL DEFAULT NULL,
-  `cost` BIGINT NULL DEFAULT NULL,
-  `created_at` TIMESTAMP NULL DEFAULT NULL,
-  `updated_at` TIMESTAMP NULL DEFAULT NULL,
+  `cost` BIGINT NULL DEFAULT 0,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `plan_id` BIGINT NOT NULL,
   `spot_id` INT NOT NULL,
   `vehicle_id` BIGINT NOT NULL,
