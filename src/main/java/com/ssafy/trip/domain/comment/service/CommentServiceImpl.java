@@ -1,6 +1,8 @@
 package com.ssafy.trip.domain.comment.service;
 
-import com.ssafy.trip.domain.comment.dto.CommentDto;
+import com.ssafy.trip.domain.comment.dto.CommentResponseDto;
+import com.ssafy.trip.domain.comment.dto.ModifyCommentRequestDto;
+import com.ssafy.trip.domain.comment.dto.WriteCommentRequestDto;
 import com.ssafy.trip.domain.comment.entity.Comment;
 import com.ssafy.trip.domain.comment.mapper.CommentMapper;
 import lombok.RequiredArgsConstructor;
@@ -16,21 +18,31 @@ public class CommentServiceImpl implements CommentService{
     private final CommentMapper commentMapper;
 
     @Override
-    public void registerComment(CommentDto commentDto) throws Exception {
-        Comment comment = commentDto.toEntity();
+    public void writeComment(WriteCommentRequestDto writeCommentRequestDto) throws Exception {
+        Comment comment = Comment.builder()
+                .writerId(writeCommentRequestDto.getWriterId())
+                .postId(writeCommentRequestDto.getPostId())
+                .content(writeCommentRequestDto.getContent())
+                .build();
         commentMapper.insert(comment);
     }
 
     @Override
-    public List<CommentDto> getComments(Long postId) throws Exception {
+    public List<CommentResponseDto> getComments(Long postId) throws Exception {
         return commentMapper.getComments(postId)
                 .stream().map(Comment::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void modifyComment(CommentDto commentDto) throws Exception {
-        commentMapper.update(commentDto.toEntity());
+    public void modifyComment(ModifyCommentRequestDto modifyCommentRequestDto) throws Exception {
+        Comment comment = Comment.builder()
+                .id(modifyCommentRequestDto.getId())
+                .writerId(modifyCommentRequestDto.getWriterId())
+                .postId(modifyCommentRequestDto.getPostId())
+                .content(modifyCommentRequestDto.getContent())
+                .build();
+        commentMapper.update(comment);
     }
 
     @Override

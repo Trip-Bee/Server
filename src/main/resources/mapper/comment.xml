@@ -7,6 +7,8 @@
     <resultMap id="comment" type="comment">
         <result column="writer_id" property="writerId"></result>
         <result column="post_id" property="postId"></result>
+        <result column="created_at" property="createdAt"></result>
+        <result column="updated_at" property="updatedAt"></result>
     </resultMap>
 
     <insert id="insert" parameterType="comment">
@@ -15,9 +17,9 @@
     </insert>
 
     <select id="getComments" parameterType="long" resultMap="comment">
-        select id, content, post_id, writer_id
-        from comment
-        where post_id = ${postId} and is_deleted = 0
+        select c.id, c.content, c.post_id, c.writer_id, u.nickname, c.created_at, c.updated_at
+        from comment c join user u on c.writer_id = u.id
+        where c.post_id = ${postId} and c.is_deleted = 0
     </select>
 
     <update id="update" parameterType="comment">
