@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class SpotDto {
+public class SearchResponseDto {
 
     private Long id;
     private Long typeId;

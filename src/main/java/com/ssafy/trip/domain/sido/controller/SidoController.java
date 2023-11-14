@@ -2,6 +2,7 @@ package com.ssafy.trip.domain.sido.controller;
 
 import com.ssafy.trip.domain.sido.dto.SidoDto;
 import com.ssafy.trip.domain.sido.service.SidoService;
+import com.ssafy.trip.global.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ public class SidoController {
     @GetMapping
     public ResponseEntity<?> findAll() throws Exception {
         List<SidoDto> list = sidoService.findAll();
-        return ResponseEntity.ok().body(list);
+        return ResponseEntity.ok(Response.success(list));
     }
 
 }

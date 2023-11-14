@@ -14,7 +14,7 @@ public interface PostMapper {
 
     Post findById(Long postId) throws SQLException;
 
-    List<Post> findAll(Map<String, String> map) throws SQLException;
+    List<Post> findAllByCategory(String category) throws SQLException;
 
     void update(Post post) throws SQLException;
 

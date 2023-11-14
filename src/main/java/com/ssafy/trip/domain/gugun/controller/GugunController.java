@@ -2,6 +2,7 @@ package com.ssafy.trip.domain.gugun.controller;
 
 import com.ssafy.trip.domain.gugun.dto.GugunDto;
 import com.ssafy.trip.domain.gugun.service.GugunService;
+import com.ssafy.trip.global.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ public class GugunController {
     @GetMapping
     public ResponseEntity<?> findAllBySidoCode(@RequestParam int sidoCode) throws Exception {
         List<GugunDto> list = gugunService.findAllBySidoCode(sidoCode);
-        return ResponseEntity.ok().body(list);
+        return ResponseEntity.ok(Response.success(list));
     }
 
 

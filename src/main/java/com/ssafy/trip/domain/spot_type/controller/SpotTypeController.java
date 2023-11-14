@@ -2,6 +2,7 @@ package com.ssafy.trip.domain.spot_type.controller;
 
 import com.ssafy.trip.domain.spot_type.dto.SpotTypeDto;
 import com.ssafy.trip.domain.spot_type.service.SpotTypeService;
+import com.ssafy.trip.global.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ public class SpotTypeController {
     @GetMapping
     public ResponseEntity<?> findAll() throws Exception {
         List<SpotTypeDto> list = spotTypeService.findAll();
-        return ResponseEntity.ok().body(list);
+        return ResponseEntity.ok(Response.success(list));
     }
 
 }
