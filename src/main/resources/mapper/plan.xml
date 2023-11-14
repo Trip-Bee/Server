@@ -4,6 +4,13 @@
 
 <mapper namespace="com.ssafy.trip.domain.plan.mapper.PlanMapper">
 
+    <resultMap id="planDto" type="planDto">
+        <result column="id" property="planId"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+        <result column="created_at" property="createdAt"/>
+    </resultMap>
+
     <select id="findByName" parameterType="string">
         select id, name
         from theme
@@ -33,5 +40,11 @@
             (${detail.order}, ${detail.cost}, ${detail.planId}, ${detail.spotId}, ${detail.vehicleId})
         </foreach>
     </insert>
+
+    <select id="findPlans" resultMap="planDto">
+        select p.id, p.start_date, p.end_date, p.title, u.nickname, p.created_at
+        from plan p join user u
+        on p.user_id = u.id
+    </select>
 
 </mapper>
