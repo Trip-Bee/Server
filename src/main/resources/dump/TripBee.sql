@@ -24,15 +24,15 @@ CREATE TABLE IF NOT EXISTS `tripbee`.`user` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(30) NULL DEFAULT NULL,
   `password` VARCHAR(255) NULL DEFAULT NULL,
+  `nickname` VARCHAR(30) NULL,
   `status` VARCHAR(20) NULL DEFAULT NULL,
   `role` VARCHAR(20) NULL DEFAULT NULL,
-  `nickname` VARCHAR(30) NULL DEFAULT NULL,
   `profile_image` VARCHAR(255) NULL DEFAULT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
   `updated_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `tripbee`.`post` (
     FOREIGN KEY (`writer_id`)
     REFERENCES `tripbee`.`user` (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `tripbee`.`comment` (
     FOREIGN KEY (`writer_id`)
     REFERENCES `tripbee`.`user` (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `tripbee`.`sido` (
   `name` VARCHAR(30) NULL DEFAULT NULL,
   PRIMARY KEY (`code`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `tripbee`.`gugun` (
     FOREIGN KEY (`sido_code`)
     REFERENCES `tripbee`.`sido` (`code`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `tripbee`.`image` (
     FOREIGN KEY (`post_id`)
     REFERENCES `tripbee`.`post` (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -173,6 +173,17 @@ CREATE TABLE IF NOT EXISTS `tripbee`.`like` (
     FOREIGN KEY (`user_id`)
     REFERENCES `tripbee`.`user` (`id`))
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `tripbee`.`theme`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tripbee`.`theme` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(30) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -181,20 +192,40 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tripbee`.`plan` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(30) NULL,
   `total_cost` BIGINT NULL DEFAULT NULL,
   `start_date` TIMESTAMP NULL DEFAULT NULL,
   `end_date` TIMESTAMP NULL DEFAULT NULL,
   `head_count` INT NULL DEFAULT NULL,
+  `hit` BIGINT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
   `updated_at` TIMESTAMP NULL DEFAULT NULL,
   `user_id` BIGINT NOT NULL,
+  `theme_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_plan_user1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_plan_theme1_idx` (`theme_id` ASC) VISIBLE,
   CONSTRAINT `fk_plan_user1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `tripbee`.`user` (`id`))
+    REFERENCES `tripbee`.`user` (`id`),
+  CONSTRAINT `fk_plan_theme1`
+    FOREIGN KEY (`theme_id`)
+    REFERENCES `tripbee`.`theme` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `tripbee`.`vehicle`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tripbee`.`vehicle` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(30) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -204,55 +235,28 @@ CREATE TABLE IF NOT EXISTS `tripbee`.`plan_details` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `order` INT NULL DEFAULT NULL,
   `cost` BIGINT NULL DEFAULT NULL,
-  `start_time` TIMESTAMP NULL DEFAULT NULL,
-  `end_time` TIMESTAMP NULL DEFAULT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
   `updated_at` TIMESTAMP NULL DEFAULT NULL,
   `plan_id` BIGINT NOT NULL,
   `spot_id` INT NOT NULL,
+  `vehicle_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_plan_details_plan1_idx` (`plan_id` ASC) VISIBLE,
   INDEX `fk_plan_details_spot1_idx` (`spot_id` ASC) VISIBLE,
+  INDEX `fk_plan_details_vehicle1_idx` (`vehicle_id` ASC) VISIBLE,
   CONSTRAINT `fk_plan_details_plan1`
     FOREIGN KEY (`plan_id`)
     REFERENCES `tripbee`.`plan` (`id`),
   CONSTRAINT `fk_plan_details_spot1`
     FOREIGN KEY (`spot_id`)
-    REFERENCES `tripbee`.`spot` (`id`))
+    REFERENCES `tripbee`.`spot` (`id`),
+  CONSTRAINT `fk_plan_details_vehicle1`
+    FOREIGN KEY (`vehicle_id`)
+    REFERENCES `tripbee`.`vehicle` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `tripbee`.`theme`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tripbee`.`theme` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(30) NULL DEFAULT NULL,
-  `plan_id` BIGINT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_theme_plan1_idx` (`plan_id` ASC) VISIBLE,
-  CONSTRAINT `fk_theme_plan1`
-    FOREIGN KEY (`plan_id`)
-    REFERENCES `tripbee`.`plan` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `tripbee`.`vehicle`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tripbee`.`vehicle` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(30) NULL DEFAULT NULL,
-  `plan_details_id` BIGINT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_vehicle_plan_details1_idx` (`plan_details_id` ASC) VISIBLE,
-  CONSTRAINT `fk_vehicle_plan_details1`
-    FOREIGN KEY (`plan_details_id`)
-    REFERENCES `tripbee`.`plan_details` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
