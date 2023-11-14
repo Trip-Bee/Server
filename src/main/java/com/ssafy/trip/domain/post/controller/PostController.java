@@ -20,7 +20,8 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#writeRequestDto.writerId == principal.id)")
+    @PreAuthorize("((#category == 'notice' and hasAuthority('ROLE_ADMIN')) " +
+            "or (#category != 'notice' and (hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN'))))")
     public ResponseEntity writePost(@PathVariable String category, @RequestBody WritePostRequestDto writePostRequestDto) throws Exception {
         postService.writePost(category, writePostRequestDto);
         return ResponseEntity.ok(Response.success());
@@ -40,15 +41,17 @@ public class PostController {
     }
 
     @PatchMapping("/{postId}")
-    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#modifyRequestDto.writerId == principal.id)")
+    @PreAuthorize("((#category == 'notice' and hasAuthority('ROLE_ADMIN')) " +
+            "or (#category != 'notice' and (hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN'))))")
     public ResponseEntity modifyPost(@PathVariable String category, @RequestBody ModifyPostRequestDto modifyPostRequestDto) throws Exception {
         postService.modifyPost(category, modifyPostRequestDto);
         return ResponseEntity.ok(Response.success());
     }
 
     @DeleteMapping("/{postId}")
-    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN'))")
-    public ResponseEntity deletePost(@PathVariable Long postId) throws Exception {
+    @PreAuthorize("((#category == 'notice' and hasAuthority('ROLE_ADMIN')) " +
+            "or (#category != 'notice' and (hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN'))))")
+    public ResponseEntity deletePost(@PathVariable String category, @PathVariable Long postId) throws Exception {
         postService.deletePost(postId);
         return ResponseEntity.ok(Response.success());
     }
