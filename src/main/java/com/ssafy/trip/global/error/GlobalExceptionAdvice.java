@@ -46,7 +46,8 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity handleDefaultExcpeiton(Exception ex) {
 
-        log.warn("ex : {}", ex.getStackTrace());
+//        log.warn("ex : {}", ex.getStackTrace());
+        ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Response.fail(HttpStatus.BAD_REQUEST.name(), "기본 에러"));
     }

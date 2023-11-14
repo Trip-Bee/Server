@@ -1,5 +1,6 @@
 package com.ssafy.trip.domain.plan.service.impl;
 
+import com.ssafy.trip.domain.plan.dto.PlanDto;
 import com.ssafy.trip.domain.plan.entity.Plan;
 import com.ssafy.trip.domain.plan.entity.PlanDetails;
 import com.ssafy.trip.domain.plan.entity.Theme;
@@ -66,5 +67,12 @@ public class PlanServiceImpl implements PlanService {
         log.debug("============ start: {}, end: {}", plan.getStartDate(), plan.getEndDate());
 
         return plan.getId();
+    }
+
+    @Override
+    public List<PlanDto> findPlans() {
+        List<PlanDto> plans = planMapper.findPlans();
+
+        return plans;
     }
 }
