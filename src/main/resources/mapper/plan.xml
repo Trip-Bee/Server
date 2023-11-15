@@ -12,21 +12,19 @@
     </resultMap>
 
     <resultMap id="planDetailsDto" type="planDetailsDto">
-<!--        // User-->
-<!--        private String nickname;-->
-
-<!--        // Plan-->
-<!--        private String planTitle;-->
-<!--        private Long totalCost;-->
-<!--        private LocalDate startDate;-->
-<!--        private LocalDate endDate;-->
-<!--        private int headCount;-->
-<!--        private Long hit;-->
-
-<!--        // Theme-->
-<!--        private String theme;-->
+<!--        select u.nickname, p.title, p.total_cost, p.start_date, p.end_date, p.head_count, p.hit, th.name-->
         <result column="title" property="planTitle"/>
-        <result column="title" property="planTitle"/>
+        <result column="total_cost" property="totalCost"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+        <result column="head_count" property="headCount"/>
+        <result column="name" property="theme"/>
+    </resultMap>
+
+    <resultMap id="detailsDto" type="detailsDto">
+        <result column="name" property="vehicleName"/>
+        <result column="title" property="spotTitle"/>
+        <result column="image" property="spotImage"/>
     </resultMap>
 
     <select id="findByName" parameterType="string">
@@ -59,19 +57,38 @@
         </foreach>
     </insert>
 
+    <update id="updateHit" parameterType="long">
+        update plan
+        set hit = hit + 1, updated_at = now()
+        where id = ${id}
+    </update>
+
+    <update id="deleteById" parameterType="long">
+        update plan
+        set is_deleted = true, updated_at = now()
+        where id = ${id}
+    </update>
+
     <select id="findPlans" resultMap="planDto">
         select p.id, p.start_date, p.end_date, p.title, u.nickname, p.created_at
         from plan p join user u
         on p.user_id = u.id
+        where is_deleted = false
     </select>
 
 <!--    Plan, User, Theme inner join -->
-    <select id="findPlanById" resultMap="planDetailsDto">
-
+    <select id="findPlanById" parameterType="long" resultMap="planDetailsDto">
+        select u.nickname, p.title, p.total_cost, p.start_date, p.end_date, p.head_count, p.hit, th.name
+        from plan p join user u join theme th
+        on p.user_id = u.id and p.theme_id = th.id
+        where p.id = ${id}
     </select>
 
-<!--    <select id="findPlanDtoById" resultMap="planDetailsDto">-->
-
-<!--    </select>-->
+    <select id="findPlanDetailsByPlanId" parameterType="long" resultMap="detailsDto">
+        select v.name, s.title, s.image, pd.cost, pd.order
+        from plan_details pd join vehicle v join spot s
+        on pd.vehicle_id = v.id and pd.spot_id = s.id
+        where pd.plan_id = ${planId}
+    </select>
 
 </mapper>

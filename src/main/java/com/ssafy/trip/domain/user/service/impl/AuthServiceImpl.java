@@ -1,6 +1,5 @@
 package com.ssafy.trip.domain.user.service.impl;
 
-import com.ssafy.trip.domain.user.dto.SignupRequestDto;
 import com.ssafy.trip.domain.user.entity.User;
 import com.ssafy.trip.domain.user.mapper.UserMapper;
 import com.ssafy.trip.domain.user.service.AuthService;
@@ -42,6 +41,7 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     @Override
     public void signup(User user) {
+        // TODO 탈퇴한 회원의 경우 기존 정보를 입력받은 정보로 수정, 없던 회원이면 추가, 기존에 있는 MEMBER인 회원이면 예외
         String password = passwordEncoder.encode(user.getPassword());
 
         user.updatePassowrd(password);
