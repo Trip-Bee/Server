@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlanDetailsDto {
@@ -30,15 +31,5 @@ public class PlanDetailsDto {
 
     public void addDetails(List<DetailsDto> details) {
         this.details = details;
-    }
-
-
-    public static class DetailsDto {
-        private int order;
-        private Long cost;
-        private String vehicleName;
-        private String spotTitle;
-        private String spotImage;
-
     }
 }
