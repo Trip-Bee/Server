@@ -1,5 +1,6 @@
 package com.ssafy.trip.domain.plan.mapper;
 
+import com.ssafy.trip.domain.plan.dto.PlanDetailsDto;
 import com.ssafy.trip.domain.plan.dto.PlanDto;
 import com.ssafy.trip.domain.plan.entity.Plan;
 import com.ssafy.trip.domain.plan.entity.PlanDetails;
@@ -17,4 +18,8 @@ public interface PlanMapper {
     void saveTheme(Theme theme);
     void savePlan(Plan plan);
     void savePlanDetails(Map<String, List<PlanDetails>> planDetails);
+
+    PlanDetailsDto findPlanById(Long id);
+
+//    PlanDetailsDto findPlanDtoById(Long id);
 }
