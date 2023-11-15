@@ -84,9 +84,13 @@ public class PlanServiceImpl implements PlanService {
 
         planDetailsDto.addDetails(details);
 
-//        조회수 hit 증가
         planMapper.updateHit(planId);
         
         return planDetailsDto;
+    }
+
+    @Override
+    public void delete(Long planId) {
+        planMapper.deleteById(planId);
     }
 }

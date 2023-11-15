@@ -26,5 +26,5 @@ public interface PlanMapper {
 
     void updateHit(Long Id);
 
-//    PlanDetailsDto findPlanDtoById(Long id);
+    void deleteById(Long id);
 }

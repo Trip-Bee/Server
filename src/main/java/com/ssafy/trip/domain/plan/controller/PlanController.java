@@ -40,17 +40,16 @@ public class PlanController {
     @GetMapping("/{planId}")
     public ResponseEntity getPlan(@PathVariable Long planId) {
 
-        // join
-        // return
-        // plan >> 제목, 여행비용, 시작일, 종료일, 여행인원, 조회수
-        // planDetails >> 순서, 비용
-        // theme >> name
-        // vehicle >> name
-        // spot >> 여행지명, 사진
-        // user >> nickname
         PlanDetailsDto planDetailsDto = planService.getPlan(planId);
 
         return ResponseEntity.ok(Response.success(planDetailsDto));
+    }
+
+    @DeleteMapping("/{planId}")
+    @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity delete(@PathVariable Long planId) {
+        planService.delete(planId);
+        return ResponseEntity.ok(Response.success());
     }
 
 }

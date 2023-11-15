@@ -63,10 +63,17 @@
         where id = ${id}
     </update>
 
+    <update id="deleteById" parameterType="long">
+        update plan
+        set is_deleted = true, updated_at = now()
+        where id = ${id}
+    </update>
+
     <select id="findPlans" resultMap="planDto">
         select p.id, p.start_date, p.end_date, p.title, u.nickname, p.created_at
         from plan p join user u
         on p.user_id = u.id
+        where is_deleted = false
     </select>
 
 <!--    Plan, User, Theme inner join -->

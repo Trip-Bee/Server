@@ -11,6 +11,6 @@ public interface PlanService {
 
     void addPlan(String themeName, Plan plan, List<PlanDetails> details);
     List<PlanDto> findPlans();
-
     PlanDetailsDto getPlan(Long planId);
+    void delete(Long planId);
 }
