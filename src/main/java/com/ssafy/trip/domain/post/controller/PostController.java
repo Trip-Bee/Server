@@ -1,16 +1,16 @@
 package com.ssafy.trip.domain.post.controller;
 
 import com.ssafy.trip.domain.post.dto.ModifyPostRequestDto;
+import com.ssafy.trip.domain.post.dto.PostRequestDto;
 import com.ssafy.trip.domain.post.dto.PostResponseDto;
 import com.ssafy.trip.domain.post.dto.WritePostRequestDto;
 import com.ssafy.trip.domain.post.service.PostService;
+import com.ssafy.trip.global.dto.PageResponse;
 import com.ssafy.trip.global.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/{category}/posts")
@@ -21,7 +21,8 @@ public class PostController {
 
     @PostMapping
     @PreAuthorize("((#category == 'notice' and hasAuthority('ROLE_ADMIN')) " +
-            "or (#category != 'notice' and (hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN'))))")
+            "or (#category != 'notice' and (hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN'))))" +
+            "and (#writePostRequestDto.writerId == principal.id)")
     public ResponseEntity writePost(@PathVariable String category, @RequestBody WritePostRequestDto writePostRequestDto) throws Exception {
         postService.writePost(category, writePostRequestDto);
         return ResponseEntity.ok(Response.success());
@@ -35,9 +36,9 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity getPosts(@PathVariable String category) throws Exception {
-        List<PostResponseDto> list = postService.getPosts(category);
-        return ResponseEntity.ok(Response.success(list));
+    public ResponseEntity getPosts(@PathVariable String category, @RequestBody PostRequestDto postRequestDto) throws Exception {
+        PageResponse pageResponse = postService.getPosts(category, postRequestDto);
+        return ResponseEntity.ok(Response.success(pageResponse));
     }
 
     @PatchMapping("/{postId}")

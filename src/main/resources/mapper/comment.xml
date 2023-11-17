@@ -11,12 +11,12 @@
         <result column="updated_at" property="updatedAt"></result>
     </resultMap>
 
-    <insert id="insert" parameterType="comment">
-        insert into comment (content, writer_id, post_id, is_deleted, created_at, updated_at)
-        values (#{content}, ${writerId}, ${postId}, 0, now(), now())
+    <insert id="save" parameterType="comment">
+        insert into comment (content, writer_id, post_id)
+        values (#{content}, ${writerId}, ${postId})
     </insert>
 
-    <select id="getComments" parameterType="long" resultMap="comment">
+    <select id="findAllByPostId" parameterType="long" resultMap="comment">
         select c.id, c.content, c.post_id, c.writer_id, u.nickname, c.created_at, c.updated_at
         from comment c join user u on c.writer_id = u.id
         where c.post_id = ${postId} and c.is_deleted = 0

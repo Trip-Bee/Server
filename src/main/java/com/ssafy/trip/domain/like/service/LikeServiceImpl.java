@@ -13,7 +13,7 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public void addLike(LikeDto likeDto) throws Exception {
-        likeMapper.insert(likeDto.toEntity());
+        likeMapper.save(likeDto.toEntity());
     }
 
     @Override

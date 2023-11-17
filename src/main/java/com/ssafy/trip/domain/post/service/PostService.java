@@ -1,10 +1,10 @@
 package com.ssafy.trip.domain.post.service;
 
 import com.ssafy.trip.domain.post.dto.ModifyPostRequestDto;
+import com.ssafy.trip.domain.post.dto.PostRequestDto;
 import com.ssafy.trip.domain.post.dto.PostResponseDto;
 import com.ssafy.trip.domain.post.dto.WritePostRequestDto;
-
-import java.util.List;
+import com.ssafy.trip.global.dto.PageResponse;
 
 public interface PostService {
 
@@ -12,7 +12,7 @@ public interface PostService {
 
     PostResponseDto getPost(Long postId) throws Exception;
 
-    List<PostResponseDto> getPosts(String category) throws Exception;
+    PageResponse getPosts(String category, PostRequestDto postRequestDto) throws Exception;
 
     void modifyPost(String category, ModifyPostRequestDto modifyPostRequestDto) throws Exception;
 

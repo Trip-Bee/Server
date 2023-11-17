@@ -10,8 +10,11 @@
         <result column="gugun_code" property="gugunCode"></result>
     </resultMap>
 
-    <select id="search" parameterType="map" resultMap="spot">
-        select * from spot
+    <select id="findAll" resultType="SpotType">
+        select id, name from spot_type
+    </select>
+
+    <sql id="search">
         <trim prefix="where" prefixOverrides="and">
             <if test="sidoCode != nul and sidoCode != ''">
                 and sido_code = #{sidoCode}
@@ -26,6 +29,17 @@
                 and title like concat('%', #{query}, '%')
             </if>
         </trim>
+    </sql>
+
+    <select id="search" parameterType="map" resultMap="spot">
+        select * from spot
+        <include refid="search"></include>
+        limit ${start}, ${size}
+    </select>
+
+    <select id="countBySearch" parameterType="map" resultType="int">
+        select count(*) from spot
+        <include refid="search"></include>
     </select>
 
 </mapper>

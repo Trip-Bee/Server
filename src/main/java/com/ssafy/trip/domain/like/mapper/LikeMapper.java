@@ -8,7 +8,7 @@ import java.sql.SQLException;
 @Mapper
 public interface LikeMapper {
 
-    void insert(Like like) throws SQLException;
+    void save(Like like) throws SQLException;
     void delete(Long likeId) throws SQLException;
     int count(Long spotId) throws SQLException;
 

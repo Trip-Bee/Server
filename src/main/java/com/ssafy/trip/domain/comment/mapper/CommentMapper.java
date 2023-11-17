@@ -9,8 +9,8 @@ import java.util.List;
 @Mapper
 public interface CommentMapper {
 
-    void insert(Comment comment) throws SQLException;
-    List<Comment> getComments(Long postId) throws  SQLException;
+    void save(Comment comment) throws SQLException;
+    List<Comment> findAllByPostId(Long postId) throws  SQLException;
     void update(Comment comment) throws SQLException;
     void delete(Long commentId) throws SQLException;
 

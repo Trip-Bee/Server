@@ -11,9 +11,9 @@
         <result column="updated_at" property="updatedAt"></result>
     </resultMap>
 
-    <insert id="insert" parameterType="comment">
-        insert into `like` (user_id, spot_id, created_at, updated_at)
-        values (${userId}, ${spotId}, now(), now())
+    <insert id="save" parameterType="comment">
+        insert into `like` (user_id, spot_id)
+        values (${userId}, ${spotId})
     </insert>
 
     <delete id="delete" parameterType="long">

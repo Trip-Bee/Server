@@ -24,12 +24,12 @@ public class CommentServiceImpl implements CommentService{
                 .postId(writeCommentRequestDto.getPostId())
                 .content(writeCommentRequestDto.getContent())
                 .build();
-        commentMapper.insert(comment);
+        commentMapper.save(comment);
     }
 
     @Override
     public List<CommentResponseDto> getComments(Long postId) throws Exception {
-        return commentMapper.getComments(postId)
+        return commentMapper.findAllByPostId(postId)
                 .stream().map(Comment::toDto)
                 .collect(Collectors.toList());
     }

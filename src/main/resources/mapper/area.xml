@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.domain.area.mapper.AreaMapper">
+
+    <resultMap id="gugun" type="gugun">
+        <result column="sido_code" property="sidoCode"></result>
+    </resultMap>
+
+    <select id="findAll" resultType="Sido">
+        select code, name from sido
+    </select>
+
+    <select id="findAllBySidoCode" parameterType="int" resultMap="gugun">
+        select g.code, g.name, g.sido_code
+        from sido s, gugun g
+        where s.code = g.sido_code and g.sido_code = ${sidoCode}
+    </select>
+
+</mapper>
