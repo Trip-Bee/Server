@@ -2,6 +2,7 @@ package com.ssafy.trip.domain.spot.controller;
 
 import com.ssafy.trip.domain.spot.dto.SearchRequestDto;
 import com.ssafy.trip.domain.spot.dto.SearchResponseDto;
+import com.ssafy.trip.domain.spot.dto.SpotTypeDto;
 import com.ssafy.trip.domain.spot.service.SpotService;
 import com.ssafy.trip.global.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,14 @@ public class SpotController {
 
     private final SpotService spotService;
 
+    @GetMapping("/type")
+    public ResponseEntity getSpotTypeList() throws Exception {
+        List<SpotTypeDto> list = spotService.getSpotTypeList();
+        return ResponseEntity.ok(Response.success(list));
+    }
+
     @GetMapping
-    public ResponseEntity<?> search(@RequestBody SearchRequestDto searchRequestDto) throws Exception {
+    public ResponseEntity search(@RequestBody SearchRequestDto searchRequestDto) throws Exception {
         List<SearchResponseDto> list = spotService.search(searchRequestDto);
         return ResponseEntity.ok(Response.success(list));
     }

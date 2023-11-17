@@ -1,6 +1,6 @@
-package com.ssafy.trip.domain.spot_type.dto;
+package com.ssafy.trip.domain.spot.dto;
 
-import com.ssafy.trip.domain.spot_type.entity.SpotType;
+import com.ssafy.trip.domain.spot.entity.SpotType;
 import lombok.*;
 
 @Getter
