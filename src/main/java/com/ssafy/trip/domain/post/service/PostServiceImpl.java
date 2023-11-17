@@ -1,12 +1,13 @@
 package com.ssafy.trip.domain.post.service;
 
 import com.ssafy.trip.domain.post.dto.ModifyPostRequestDto;
-import com.ssafy.trip.domain.post.dto.PostRequestDto;
 import com.ssafy.trip.domain.post.dto.PostResponseDto;
 import com.ssafy.trip.domain.post.dto.WritePostRequestDto;
 import com.ssafy.trip.domain.post.entity.Post;
 import com.ssafy.trip.domain.post.mapper.PostMapper;
+import com.ssafy.trip.global.dto.PageRequest;
 import com.ssafy.trip.global.dto.PageResponse;
+import com.ssafy.trip.global.dto.SearchRequest;
 import com.ssafy.trip.global.util.PageUtil;
 import com.ssafy.trip.global.util.SearchUtil;
 import lombok.RequiredArgsConstructor;
@@ -39,16 +40,19 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PageResponse getPosts(String category, PostRequestDto postRequestDto) throws Exception {
-        Map<String, String> map = PageUtil.getStartAndSize(postRequestDto.getPageRequest());
-        map.putAll(SearchUtil.getKeyAndWord(postRequestDto.getSearchRequest()));
-        map.put("category", convertCategory(category).toString());
+    public PageResponse getPosts(String category, Map<String, String> map) throws Exception {
+        PageRequest pageRequest = new PageRequest(Integer.parseInt(map.get("page")), Integer.parseInt(map.get("size")));
+        SearchRequest searchRequest = new SearchRequest(map.get("key"), map.get("word"));
+
+        Map<String, String> result = PageUtil.getStartAndSize(pageRequest);
+        result.putAll(SearchUtil.getKeyAndWord(searchRequest));
+        result.put("category", convertCategory(category).toString());
 
         int totalCount = postMapper.countByCategory(convertCategory(category).toString());
-        int currentPage = Integer.parseInt(map.get("page"));
-        int totalPage = (totalCount - 1) / Integer.parseInt(map.get("size")) + 1;
+        int currentPage = Integer.parseInt(result.get("page"));
+        int totalPage = (totalCount - 1) / Integer.parseInt(result.get("size")) + 1;
 
-        List<PostResponseDto> list = postMapper.findAllByCategory(map)
+        List<PostResponseDto> list = postMapper.findAllByCategory(result)
                 .stream().map(Post::toDto)
                 .collect(Collectors.toList());
 

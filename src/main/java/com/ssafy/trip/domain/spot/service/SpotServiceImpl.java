@@ -1,11 +1,11 @@
 package com.ssafy.trip.domain.spot.service;
 
 import com.ssafy.trip.domain.spot.dto.SpotDto;
-import com.ssafy.trip.domain.spot.dto.SpotSearchRequestDto;
 import com.ssafy.trip.domain.spot.dto.SpotTypeDto;
 import com.ssafy.trip.domain.spot.entity.Spot;
 import com.ssafy.trip.domain.spot.entity.SpotType;
 import com.ssafy.trip.domain.spot.mapper.SpotMapper;
+import com.ssafy.trip.global.dto.PageRequest;
 import com.ssafy.trip.global.dto.PageResponse;
 import com.ssafy.trip.global.util.PageUtil;
 import lombok.RequiredArgsConstructor;
@@ -29,13 +29,9 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public PageResponse search(SpotSearchRequestDto spotSearchRequestDto) throws Exception {
-        Map<String, String> map = PageUtil.getStartAndSize(spotSearchRequestDto.getPageRequest());
-
-        map.put("sidoCode", String.valueOf(spotSearchRequestDto.getSidoCode()));
-        map.put("gugunCode", String.valueOf(spotSearchRequestDto.getGugunCode()));
-        map.put("typeId", String.valueOf(spotSearchRequestDto.getTypeId()));
-        map.put("query", spotSearchRequestDto.getQuery());
+    public PageResponse search(Map<String, String> map) throws Exception {
+        PageRequest pageRequest = new PageRequest(Integer.parseInt(map.get("page")), Integer.parseInt(map.get("size")));
+        map.putAll(PageUtil.getStartAndSize(pageRequest));
 
         int totalCount = spotMapper.countBySearch(map);
         int currentPage = Integer.parseInt(map.get("page"));

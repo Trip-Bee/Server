@@ -1,7 +1,6 @@
 package com.ssafy.trip.domain.post.controller;
 
 import com.ssafy.trip.domain.post.dto.ModifyPostRequestDto;
-import com.ssafy.trip.domain.post.dto.PostRequestDto;
 import com.ssafy.trip.domain.post.dto.PostResponseDto;
 import com.ssafy.trip.domain.post.dto.WritePostRequestDto;
 import com.ssafy.trip.domain.post.service.PostService;
@@ -11,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/{category}/posts")
@@ -36,8 +38,8 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity getPosts(@PathVariable String category, @RequestBody PostRequestDto postRequestDto) throws Exception {
-        PageResponse pageResponse = postService.getPosts(category, postRequestDto);
+    public ResponseEntity getPosts(@PathVariable String category, @RequestParam Map<String, String> map) throws Exception {
+        PageResponse pageResponse = postService.getPosts(category, map);
         return ResponseEntity.ok(Response.success(pageResponse));
     }
 
