@@ -10,11 +10,13 @@ import java.util.Map;
 @Mapper
 public interface PostMapper {
 
-    void insert(Post post) throws SQLException;
+    void save(Post post) throws SQLException;
 
     Post findById(Long postId) throws SQLException;
 
-    List<Post> findAllByCategory(String category) throws SQLException;
+    List<Post> findAllByCategory(Map<String, String> map) throws SQLException;
+
+    int countByCategory(String category) throws SQLException;
 
     void update(Post post) throws SQLException;
 

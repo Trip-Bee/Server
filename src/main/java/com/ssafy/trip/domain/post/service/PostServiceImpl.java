@@ -1,14 +1,19 @@
 package com.ssafy.trip.domain.post.service;
 
 import com.ssafy.trip.domain.post.dto.ModifyPostRequestDto;
+import com.ssafy.trip.domain.post.dto.PostRequestDto;
 import com.ssafy.trip.domain.post.dto.PostResponseDto;
 import com.ssafy.trip.domain.post.dto.WritePostRequestDto;
 import com.ssafy.trip.domain.post.entity.Post;
 import com.ssafy.trip.domain.post.mapper.PostMapper;
+import com.ssafy.trip.global.dto.PageResponse;
+import com.ssafy.trip.global.util.PageUtil;
+import com.ssafy.trip.global.util.SearchUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +30,7 @@ public class PostServiceImpl implements PostService {
                 .category(convertCategory(category))
                 .writerId(writePostRequestDto.getWriterId())
                 .build();
-        postMapper.insert(post);
+        postMapper.save(post);
     }
 
     @Override
@@ -34,10 +39,24 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostResponseDto> getPosts(String category) throws Exception {
-        return postMapper.findAllByCategory(convertCategory(category).toString())
+    public PageResponse getPosts(String category, PostRequestDto postRequestDto) throws Exception {
+        Map<String, String> map = PageUtil.getStartAndSize(postRequestDto.getPageRequest());
+        map.putAll(SearchUtil.getKeyAndWord(postRequestDto.getSearchRequest()));
+        map.put("category", convertCategory(category).toString());
+
+        int totalCount = postMapper.countByCategory(convertCategory(category).toString());
+        int currentPage = Integer.parseInt(map.get("page"));
+        int totalPage = (totalCount - 1) / Integer.parseInt(map.get("size")) + 1;
+
+        List<PostResponseDto> list = postMapper.findAllByCategory(map)
                 .stream().map(Post::toDto)
                 .collect(Collectors.toList());
+
+        return PageResponse.builder()
+                .data(list)
+                .currentPage(currentPage)
+                .totalPage(totalPage)
+                .build();
     }
 
     @Override

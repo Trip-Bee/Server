@@ -22,10 +22,32 @@
         where p.id = ${postId} and p.is_deleted = 0
     </select>
 
-    <select id="findAllByCategory" parameterType="String" resultMap="post">
+    <sql id="search">
+        <if test="key != null">
+            <if test="key == 'title'">
+                and title like concat('%', #{word}, '%')
+            </if>
+            <if test="key != 'title'">
+                and ${key} = #{word}
+            </if>
+        </if>
+    </sql>
+
+    <select id="findAllByCategory" parameterType="map" resultMap="post">
         select p.id, p.writer_id, u.nickname, p.title, p.category, p.content, p.hit, p.created_at, p.updated_at
         from post p join user u on p.writer_id = u.id
-        where p.category = #{category} and p.is_deleted = 0
+        <trim prefix="where" prefixOverrides="and">
+            <include refid="search"></include>
+            and p.is_deleted = 0
+        </trim>
+        order by p.id desc
+        limit ${start}, ${size}
+    </select>
+
+    <select id="countByCategory" parameterType="String" resultType="int">
+        select count(*)
+        from post
+        where category = #{category} and is_deleted = 0
     </select>
 
     <update id="update" parameterType="post">
