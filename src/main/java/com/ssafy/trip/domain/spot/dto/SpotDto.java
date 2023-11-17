@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class SearchResponseDto {
+public class SpotDto {
 
     private Long id;
     private Long typeId;
@@ -23,22 +23,5 @@ public class SearchResponseDto {
     private BigDecimal longitude;
     private Long sidoCode;
     private Long gugunCode;
-
-    public Spot toEntity() {
-        return Spot.builder()
-                .id(id)
-                .typeId(typeId)
-                .title(title)
-                .addr1(addr1)
-                .addr2(addr2)
-                .zipcode(zipcode)
-                .tel(tel)
-                .image(image)
-                .latitude(latitude)
-                .longitude(longitude)
-                .sidoCode(sidoCode)
-                .gugunCode(gugunCode)
-                .build();
-    }
 
 }
