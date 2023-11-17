@@ -10,6 +10,10 @@
         <result column="gugun_code" property="gugunCode"></result>
     </resultMap>
 
+    <select id="findAll" resultType="SpotType">
+        select id, name from spot_type
+    </select>
+
     <select id="search" parameterType="map" resultMap="spot">
         select * from spot
         <trim prefix="where" prefixOverrides="and">

@@ -1,23 +1,21 @@
-package com.ssafy.trip.domain.gugun.entity;
+package com.ssafy.trip.domain.area.dto;
 
-import com.ssafy.trip.domain.gugun.dto.GugunDto;
+import com.ssafy.trip.domain.area.entity.Sido;
 import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class Gugun {
+public class SidoDto {
 
     private int code;
     private String name;
-    private int sidoCode;
 
-    public GugunDto toDto() {
-        return GugunDto.builder()
+    public Sido toEntity() {
+        return Sido.builder()
                 .code(code)
                 .name(name)
-                .sidoCode(sidoCode)
                 .build();
     }
 

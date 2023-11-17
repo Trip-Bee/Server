@@ -1,6 +1,6 @@
-package com.ssafy.trip.domain.sido.entity;
+package com.ssafy.trip.domain.area.entity;
 
-import com.ssafy.trip.domain.sido.dto.SidoDto;
+import com.ssafy.trip.domain.area.dto.SidoDto;
 import lombok.*;
 
 @Getter
