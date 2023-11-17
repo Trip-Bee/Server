@@ -11,9 +11,9 @@
         <result column="updated_at" property="updatedAt"></result>
     </resultMap>
 
-    <insert id="insert" parameterType="post">
-        insert into post (writer_id, title, category, content, is_deleted, hit, created_at, updated_at)
-        values (${writerId}, #{title}, #{category}, #{content}, 0, 0, now(), now())
+    <insert id="save" parameterType="post">
+        insert into post (writer_id, title, category, content)
+        values (${writerId}, #{title}, #{category}, #{content})
     </insert>
 
     <select id="findById" parameterType="long" resultMap="post">
