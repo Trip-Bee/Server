@@ -13,5 +13,6 @@ public interface SpotMapper {
 
     List<SpotType> findAllSpotType() throws SQLException;
     List<Spot> search(Map<String, String> map) throws SQLException;
+    int countBySearch(Map<String, String> map) throws SQLException;
 
 }

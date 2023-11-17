@@ -1,15 +1,16 @@
 package com.ssafy.trip.domain.spot.service;
 
-import com.ssafy.trip.domain.spot.dto.SearchRequestDto;
-import com.ssafy.trip.domain.spot.dto.SearchResponseDto;
+import com.ssafy.trip.domain.spot.dto.SpotDto;
+import com.ssafy.trip.domain.spot.dto.SpotSearchRequestDto;
 import com.ssafy.trip.domain.spot.dto.SpotTypeDto;
 import com.ssafy.trip.domain.spot.entity.Spot;
 import com.ssafy.trip.domain.spot.entity.SpotType;
 import com.ssafy.trip.domain.spot.mapper.SpotMapper;
+import com.ssafy.trip.global.dto.PageResponse;
+import com.ssafy.trip.global.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,14 +29,26 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public List<SearchResponseDto> search(SearchRequestDto searchRequestDto) throws Exception {
-        Map<String, String> map = new HashMap<>();
-        map.put("sidoCode", String.valueOf(searchRequestDto.getSidoCode()));
-        map.put("gugunCode", String.valueOf(searchRequestDto.getGugunCode()));
-        map.put("typeId", String.valueOf(searchRequestDto.getTypeId()));
-        map.put("query", searchRequestDto.getQuery());
-        return spotMapper.search(map)
+    public PageResponse search(SpotSearchRequestDto spotSearchRequestDto) throws Exception {
+        Map<String, String> map = PageUtil.getStartAndSize(spotSearchRequestDto.getPageRequest());
+
+        map.put("sidoCode", String.valueOf(spotSearchRequestDto.getSidoCode()));
+        map.put("gugunCode", String.valueOf(spotSearchRequestDto.getGugunCode()));
+        map.put("typeId", String.valueOf(spotSearchRequestDto.getTypeId()));
+        map.put("query", spotSearchRequestDto.getQuery());
+
+        int totalCount = spotMapper.countBySearch(map);
+        int currentPage = Integer.parseInt(map.get("page"));
+        int totalPage = (totalCount - 1) / Integer.parseInt(map.get("size")) + 1;
+
+        List<SpotDto> list = spotMapper.search(map)
                 .stream().map(Spot::toDto)
                 .collect(Collectors.toList());
+
+        return PageResponse.<List<SpotDto>>builder()
+                .data(list)
+                .currentPage(currentPage)
+                .totalPage(totalPage)
+                .build();
     }
 }
