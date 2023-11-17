@@ -1,6 +1,5 @@
 package com.ssafy.trip.domain.spot.controller;
 
-import com.ssafy.trip.domain.spot.dto.SpotSearchRequestDto;
 import com.ssafy.trip.domain.spot.dto.SpotTypeDto;
 import com.ssafy.trip.domain.spot.service.SpotService;
 import com.ssafy.trip.global.dto.PageResponse;
@@ -10,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/spot")
@@ -25,8 +25,8 @@ public class SpotController {
     }
 
     @GetMapping
-    public ResponseEntity search(@RequestBody SpotSearchRequestDto spotSearchRequestDto) throws Exception {
-        PageResponse pageResponse = spotService.search(spotSearchRequestDto);
+    public ResponseEntity search(@RequestParam Map<String, String> map) throws Exception {
+        PageResponse pageResponse = spotService.search(map);
         return ResponseEntity.ok(Response.success(pageResponse));
     }
 
