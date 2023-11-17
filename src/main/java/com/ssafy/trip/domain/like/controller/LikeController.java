@@ -1,4 +1,4 @@
-package com.ssafy.trip.domain.like.comtroller;
+package com.ssafy.trip.domain.like.controller;
 
 import com.ssafy.trip.domain.like.dto.LikeDto;
 import com.ssafy.trip.domain.like.service.LikeService;
