@@ -9,6 +9,7 @@ import lombok.*;
 public class PageResponse<T> {
 
     private T data;
+    private int size;
     private int currentPage;
     private int totalPage;
 

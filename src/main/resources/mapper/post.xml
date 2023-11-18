@@ -23,7 +23,7 @@
     </select>
 
     <sql id="search">
-        <if test="key != null">
+        <if test="key != null and key != ''">
             <if test="key == 'title'">
                 and title like concat('%', #{word}, '%')
             </if>

@@ -12,8 +12,8 @@ import lombok.Setter;
 public class PageRequest {
 
     // 현재 페이지
-    private int page;
+    private String page;
     // 페이지 크기
-    private int size;
+    private String size;
 
 }
