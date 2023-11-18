@@ -37,6 +37,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwt = getJwtToken(request);
+        log.info("gkgkgkgkgk {}", jwt);
+
         // 로그아웃 체크
         if (isLogout(jwt, response)) {
             return;

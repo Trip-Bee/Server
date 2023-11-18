@@ -61,12 +61,15 @@ public class JwtServiceImpl implements JwtService {
         tokenRepository.save(refreshToken, accessToken, jwtUtils.getRefreshTokenExpiredMin());
         return TokenDto.builder()
                 .accessToken(accessToken)
+                .accessTokenExpired(jwtUtils.getAccessTokenExpiredMin() * 60)
                 .refreshToken(refreshToken)
+                .refreshTokenExpired(jwtUtils.getRefreshTokenExpiredMin() * 60)
                 .build();
     }
 
     private String issueToken(Claims claims, int expiresMin, Key secretKey) {
         Date now = new Date();
+        log.debug("================= expire {}", expiresMin * ONE_MINUTE);
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
