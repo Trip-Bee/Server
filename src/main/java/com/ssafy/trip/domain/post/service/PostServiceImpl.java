@@ -13,6 +13,7 @@ import com.ssafy.trip.global.util.SearchUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,23 +42,26 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PageResponse getPosts(String category, Map<String, String> map) throws Exception {
-        PageRequest pageRequest = new PageRequest(Integer.parseInt(map.get("page")), Integer.parseInt(map.get("size")));
+        PageRequest pageRequest = new PageRequest(map.get("page"), map.get("size"));
         SearchRequest searchRequest = new SearchRequest(map.get("key"), map.get("word"));
 
-        Map<String, String> result = PageUtil.getStartAndSize(pageRequest);
-        result.putAll(SearchUtil.getKeyAndWord(searchRequest));
-        result.put("category", convertCategory(category).toString());
+        Map<String, String> param = new HashMap<>();
+        param.putAll(PageUtil.getStartAndSize(pageRequest));
+        param.putAll(SearchUtil.getKeyAndWord(searchRequest));
+        param.put("category", convertCategory(category).toString());
 
+        int size = Integer.parseInt(param.get("size"));
         int totalCount = postMapper.countByCategory(convertCategory(category).toString());
-        int currentPage = Integer.parseInt(result.get("page"));
-        int totalPage = (totalCount - 1) / Integer.parseInt(result.get("size")) + 1;
+        int currentPage = Integer.parseInt(param.get("page"));
+        int totalPage = (totalCount - 1) / Integer.parseInt(param.get("size")) + 1;
 
-        List<PostResponseDto> list = postMapper.findAllByCategory(result)
+        List<PostResponseDto> list = postMapper.findAllByCategory(param)
                 .stream().map(Post::toDto)
                 .collect(Collectors.toList());
 
         return PageResponse.builder()
                 .data(list)
+                .size(size)
                 .currentPage(currentPage)
                 .totalPage(totalPage)
                 .build();

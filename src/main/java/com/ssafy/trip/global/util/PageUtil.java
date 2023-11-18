@@ -10,11 +10,11 @@ public class PageUtil {
     public static Map<String, String> getStartAndSize(PageRequest pageRequest) {
         Map<String, String> map = new HashMap<>();
 
-        int page = pageRequest.getPage();
-        int size = pageRequest.getSize();
+        String page = pageRequest.getPage();
+        String size = pageRequest.getSize();
 
-        int currentPage = page == 0 ? 1 : page;
-        int sizePerPage = size == 0 ? 10 : size;
+        int currentPage = (page == null || page.isEmpty()) ? 1 : Integer.parseInt(page);
+        int sizePerPage = (size == null || size.isEmpty()) ? 10 : Integer.parseInt(size);
 
         int start = currentPage * sizePerPage - sizePerPage;
         map.put("page", String.valueOf(currentPage));

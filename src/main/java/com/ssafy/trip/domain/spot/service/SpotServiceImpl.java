@@ -30,9 +30,10 @@ public class SpotServiceImpl implements SpotService {
 
     @Override
     public PageResponse search(Map<String, String> map) throws Exception {
-        PageRequest pageRequest = new PageRequest(Integer.parseInt(map.get("page")), Integer.parseInt(map.get("size")));
+        PageRequest pageRequest = new PageRequest(map.get("page"), map.get("size"));
         map.putAll(PageUtil.getStartAndSize(pageRequest));
 
+        int size = Integer.parseInt(map.get("size"));
         int totalCount = spotMapper.countBySearch(map);
         int currentPage = Integer.parseInt(map.get("page"));
         int totalPage = (totalCount - 1) / Integer.parseInt(map.get("size")) + 1;
@@ -43,6 +44,7 @@ public class SpotServiceImpl implements SpotService {
 
         return PageResponse.<List<SpotDto>>builder()
                 .data(list)
+                .size(size)
                 .currentPage(currentPage)
                 .totalPage(totalPage)
                 .build();
