@@ -10,7 +10,7 @@
         <result column="gugun_code" property="gugunCode"></result>
     </resultMap>
 
-    <select id="findAll" resultType="SpotType">
+    <select id="findAllSpotType" resultType="SpotType">
         select id, name from spot_type
     </select>
 
