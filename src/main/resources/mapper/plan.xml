@@ -6,6 +6,7 @@
 
     <resultMap id="planDto" type="planDto">
         <result column="id" property="planId"/>
+        <result column="user_id" property="writerId"/>
         <result column="start_date" property="startDate"/>
         <result column="end_date" property="endDate"/>
         <result column="created_at" property="createdAt"/>
@@ -22,6 +23,7 @@
     </resultMap>
 
     <resultMap id="detailsDto" type="detailsDto">
+        <result column="date_order" property="dateOrder"/>
         <result column="name" property="vehicleName"/>
         <result column="title" property="spotTitle"/>
         <result column="image" property="spotImage"/>
@@ -50,10 +52,10 @@
     </insert>
 
     <insert id="savePlanDetails" parameterType="java.util.Map">
-        insert into plan_details(`order`, cost, plan_id, spot_id, vehicle_id)
+        insert into plan_details(`order`, date_order, cost, plan_id, spot_id, vehicle_id)
         values
         <foreach collection="list" item="detail" separator=",">
-            (${detail.order}, ${detail.cost}, ${detail.planId}, ${detail.spotId}, ${detail.vehicleId})
+            (${detail.order}, ${detail.dateOrder}, ${detail.cost}, ${detail.planId}, ${detail.spotId}, ${detail.vehicleId})
         </foreach>
     </insert>
 
@@ -70,7 +72,7 @@
     </update>
 
     <select id="findPlans" resultMap="planDto">
-        select p.id, p.start_date, p.end_date, p.title, u.nickname, p.created_at
+        select p.id, p.start_date, p.end_date, p.title, p.user_id, u.nickname, p.created_at
         from plan p join user u
         on p.user_id = u.id
         where is_deleted = false
@@ -85,10 +87,11 @@
     </select>
 
     <select id="findPlanDetailsByPlanId" parameterType="long" resultMap="detailsDto">
-        select v.name, s.title, s.image, pd.cost, pd.order
+        select v.name, s.title, s.image, pd.cost, pd.order, pd.date_order
         from plan_details pd join vehicle v join spot s
         on pd.vehicle_id = v.id and pd.spot_id = s.id
         where pd.plan_id = ${planId}
+        order by pd.date_order, pd.order
     </select>
 
 </mapper>

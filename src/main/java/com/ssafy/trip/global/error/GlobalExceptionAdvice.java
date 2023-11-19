@@ -1,6 +1,8 @@
 package com.ssafy.trip.global.error;
 
 import com.ssafy.trip.global.dto.Response;
+import com.ssafy.trip.global.error.exception.ExceptionType;
+import com.ssafy.trip.global.error.exception.UserException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,16 @@ public class GlobalExceptionAdvice {
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(Response.fail(HttpStatus.UNAUTHORIZED.name(), Authentication_EXCEPTION.getErrorMessage()));
+    }
+
+    @ExceptionHandler({UserException.class})
+    public ResponseEntity userExceptionHandler(UserException ex) {
+        log.warn("======= 회원관련 예외 =======");
+        log.warn("ex : {}", ex.getStackTrace());
+
+        ExceptionType exceptionType = ex.getExceptionType();
+        return ResponseEntity.status(exceptionType.getHttpStatus())
+                .body(Response.fail(exceptionType.name(), exceptionType.getErrorMessage()));
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)

@@ -46,6 +46,7 @@ public class PlanRequestDto {
         private int spotId;
         private Long vehicleId;
         private int order;
+        private int dateOrder;
         private Long cost;
 
         public PlanDetails toEntity() {
@@ -53,6 +54,7 @@ public class PlanRequestDto {
                     .spotId(spotId)
                     .vehicleId(vehicleId)
                     .order(order)
+                    .dateOrder(dateOrder)
                     .cost(cost)
                     .build();
         }

@@ -13,6 +13,8 @@ public interface UserMapper {
 
     Optional<User> findByEmail(String email);
 
+    int countByEmail(String email);
+
     void update(User user);
 
     void updateUserStatus(Long id, User.Status status);

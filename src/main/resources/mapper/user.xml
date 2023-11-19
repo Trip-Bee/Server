@@ -14,6 +14,12 @@
         values(#{email}, #{password}, #{nickname}, #{profileImage}, #{status}, #{role}, now(), now())
     </insert>
 
+    <select id="countByEmail" parameterType="string" resultType="int">
+        select count(*)
+        from user
+        where email=#{email};
+    </select>
+
     <select id="findById" parameterType="long" resultMap="user">
         select id, email, password, nickname, profile_image, created_at, updated_at, role
         from user

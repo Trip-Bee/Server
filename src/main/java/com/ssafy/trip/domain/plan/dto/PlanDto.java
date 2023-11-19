@@ -15,6 +15,7 @@ public class PlanDto {
     private LocalDate startDate;
     private LocalDate endDate;
     private String title;
+    private Long writerId;
     private String nickname;
     private LocalDateTime createdAt;
 }

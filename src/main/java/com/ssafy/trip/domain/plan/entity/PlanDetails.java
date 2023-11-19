@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class PlanDetails {
     private Long id;
@@ -16,6 +16,7 @@ public class PlanDetails {
     private int spotId;
     private Long vehicleId;
     private int order;
+    private int dateOrder;
     private Long cost;
 
     private LocalDateTime createdAt;
