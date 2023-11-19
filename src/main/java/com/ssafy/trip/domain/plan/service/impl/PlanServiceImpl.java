@@ -80,7 +80,10 @@ public class PlanServiceImpl implements PlanService {
         PlanDetailsDto planDetailsDto = planMapper.findPlanById(planId);
 
         List<DetailsDto> details = planMapper.findPlanDetailsByPlanId(planId);
-        Collections.sort(details);
+
+        for (DetailsDto detail : details) {
+            log.debug("============= detail {}", detail);
+        }
 
         planDetailsDto.addDetails(details);
 
