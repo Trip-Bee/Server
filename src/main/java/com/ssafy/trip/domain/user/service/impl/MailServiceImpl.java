@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ssafy.trip.global.error.exception.ExceptionType.INVALID_EMAIL;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -26,7 +28,7 @@ public class MailServiceImpl implements MailService {
     private final HtmlTemplate htmlTemplate;
     @Override
     public void sendPasswordEmail(final String email) {
-        User user = userMapper.findByEmail(email).orElseThrow(() -> new UserException());
+        User user = userMapper.findByEmail(email).orElseThrow(() -> new UserException(INVALID_EMAIL));
         UserInfoDto userInfo = UserInfoDto.from(user);
         String accessToken = jwtService.issueAccessToken(userInfo);
 

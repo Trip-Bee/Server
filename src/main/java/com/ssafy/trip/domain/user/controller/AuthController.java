@@ -27,6 +27,12 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestBody SignupRequestDto signupRequestDto) {
+
+        log.debug("nickname {}", signupRequestDto.getNickname());
+        log.debug("email {}", signupRequestDto.getEmail());
+        log.debug("password {}", signupRequestDto.getPassword());
+        log.debug("profileImage {}", signupRequestDto.getProfileImage());
+
         authService.signup(signupRequestDto.toEntity());
         return ResponseEntity.ok(Response.success());
     }
