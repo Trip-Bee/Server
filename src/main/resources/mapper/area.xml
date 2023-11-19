@@ -8,11 +8,11 @@
         <result column="sido_code" property="sidoCode"></result>
     </resultMap>
 
-    <select id="findAll" resultType="Sido">
+    <select id="findAllSido" resultType="Sido">
         select code, name from sido
     </select>
 
-    <select id="findAllBySidoCode" parameterType="int" resultMap="gugun">
+    <select id="findAllGugunBySidoCode" parameterType="int" resultMap="gugun">
         select g.code, g.name, g.sido_code
         from sido s, gugun g
         where s.code = g.sido_code and g.sido_code = ${sidoCode}
