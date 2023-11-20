@@ -14,7 +14,7 @@ public class PageUtil {
         String size = pageRequest.getSize();
 
         int currentPage = (page == null || page.isEmpty() || "0".equals(page)) ? 1 : Integer.parseInt(page);
-        int sizePerPage = (size == null || size.isEmpty() || "0".equals(page)) ? 10 : Integer.parseInt(size);
+        int sizePerPage = (size == null || size.isEmpty() || "0".equals(size)) ? 10 : Integer.parseInt(size);
 
         int start = currentPage * sizePerPage - sizePerPage;
         map.put("page", String.valueOf(currentPage));
