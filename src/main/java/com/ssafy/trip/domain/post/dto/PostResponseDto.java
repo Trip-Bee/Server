@@ -3,6 +3,7 @@ package com.ssafy.trip.domain.post.dto;
 import com.ssafy.trip.domain.post.entity.Post;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,7 +19,7 @@ public class PostResponseDto {
     private Post.Category category;
     private String content;
     private Long hit;
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     private LocalDateTime updatedAt;
 
 }

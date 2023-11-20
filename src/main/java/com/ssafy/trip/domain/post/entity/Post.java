@@ -32,7 +32,7 @@ public class Post extends BaseEntity {
                 .category(category)
                 .content(content)
                 .hit(hit)
-                .createdAt(getCreatedAt())
+                .createdAt(getCreatedAt().toLocalDate())
                 .updatedAt(getUpdatedAt())
                 .build();
     }
