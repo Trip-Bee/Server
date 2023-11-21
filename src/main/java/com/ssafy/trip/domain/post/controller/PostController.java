@@ -31,8 +31,8 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity getPost(@PathVariable Long postId) throws Exception {
-        PostResponseDto postResponseDto = postService.getPost(postId);
+    public ResponseEntity getPost(@PathVariable String category, @PathVariable Long postId) throws Exception {
+        PostResponseDto postResponseDto = postService.getPost(category, postId);
         postService.updateHit(postId);
         return ResponseEntity.ok(Response.success(postResponseDto));
     }

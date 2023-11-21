@@ -12,7 +12,7 @@ public interface PostMapper {
 
     void save(Post post) throws SQLException;
 
-    Post findById(Long postId) throws SQLException;
+    Post findByIdAndCategory(Map<String, String> map) throws SQLException;
 
     List<Post> findAllByCategory(Map<String, String> map) throws SQLException;
 

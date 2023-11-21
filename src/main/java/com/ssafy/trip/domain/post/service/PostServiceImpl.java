@@ -36,8 +36,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponseDto getPost(Long postId) throws Exception {
-        return postMapper.findById(postId).toDto();
+    public PostResponseDto getPost(String category, Long postId) throws Exception {
+        Map<String, String> map = new HashMap<>();
+        map.put("category", category);
+        map.put("postId", postId.toString());
+        return postMapper.findByIdAndCategory(map).toDto();
     }
 
     @Override
