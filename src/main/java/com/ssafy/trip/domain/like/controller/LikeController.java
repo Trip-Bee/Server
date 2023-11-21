@@ -16,18 +16,25 @@ public class LikeController {
     private final LikeService likeService;
 
     @PostMapping
-    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#likeDto.userId == principal.id)")
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN'))")
     public ResponseEntity addLike(@RequestBody LikeDto likeDto) throws Exception {
-        likeService.addLike(likeDto);
+        likeService.addOrDeleteLike(likeDto.getUserId(), likeDto.getSpotId());
         return ResponseEntity.ok(Response.success());
     }
 
-    @DeleteMapping("/{likeId}")
-    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN'))")
-    public ResponseEntity deleteLike(@PathVariable Long likeId) throws Exception {
-        likeService.deleteLike(likeId);
-        return ResponseEntity.ok(Response.success());
-    }
+//    @PostMapping
+//    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#likeDto.userId == principal.id)")
+//    public ResponseEntity addLike(@RequestBody LikeDto likeDto) throws Exception {
+//        likeService.addLike(likeDto);
+//        return ResponseEntity.ok(Response.success());
+//    }
+
+//    @DeleteMapping("/{likeId}")
+//    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN'))")
+//    public ResponseEntity deleteLike(@PathVariable Long likeId) throws Exception {
+//        likeService.deleteLike(likeId);
+//        return ResponseEntity.ok(Response.success());
+//    }
 
     @GetMapping
     public ResponseEntity count(@RequestParam Long spotId) throws Exception {

@@ -15,7 +15,7 @@ import java.util.Optional;
 @Mapper
 public interface PlanMapper {
     Optional<Theme> findByName(String name);
-    List<PlanDto> findPlans();
+    List<PlanDto> findPlans(Map<String, String> param);
     void saveTheme(Theme theme);
     void savePlan(Plan plan);
     void savePlanDetails(Map<String, List<PlanDetails>> planDetails);
@@ -23,6 +23,8 @@ public interface PlanMapper {
     PlanDetailsDto findPlanById(Long id);
 
     List<DetailsDto> findPlanDetailsByPlanId(Long planId);
+
+    int countPlans();
 
     void updateHit(Long Id);
 
