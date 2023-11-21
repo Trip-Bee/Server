@@ -14,9 +14,7 @@ public class SpotDto {
     private int id;
     private int typeId;
     private String title;
-    private String addr1;
-    private String addr2;
-    private String zipcode;
+    private String addr;
     private String tel;
     private String image;
     private BigDecimal latitude;
