@@ -26,11 +26,17 @@ public class Spot {
     private String overview;
 
     public SpotDto toDto() {
+        String addr = "";
+        if (!zipcode.isEmpty()) {
+            addr += ("(" + zipcode + ") ");
+        }
+        addr += addr1;
+        addr += addr2;
         return SpotDto.builder()
                 .id(id)
                 .typeId(typeId)
                 .title(title)
-                .addr('(' + zipcode + ')' +addr1 + addr2)
+                .addr(addr)
                 .tel(tel)
                 .image(image)
                 .latitude(latitude)

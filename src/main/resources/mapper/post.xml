@@ -16,10 +16,10 @@
         values (${writerId}, #{title}, #{category}, #{content})
     </insert>
 
-    <select id="findById" parameterType="long" resultMap="post">
+    <select id="findByIdAndCategory" parameterType="map" resultMap="post">
         select p.id, p.writer_id, u.nickname, p.title, p.category, p.content, p.hit, p.created_at, p.updated_at
         from post p join user u on p.writer_id = u.id
-        where p.id = ${postId} and p.is_deleted = 0
+        where p.id = ${postId} and p.is_deleted = 0 and p.category = #{category}
     </select>
 
     <sql id="search">
@@ -38,6 +38,7 @@
         from post p join user u on p.writer_id = u.id
         <trim prefix="where" prefixOverrides="and">
             <include refid="search"></include>
+            and p.category = #{category}
             and p.is_deleted = 0
         </trim>
         order by p.id desc
