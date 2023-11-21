@@ -33,7 +33,7 @@ public class MailServiceImpl implements MailService {
         String accessToken = jwtService.issueAccessToken(userInfo);
 
         log.debug("access token : {}", accessToken);
-        String targetUrl = "프론트엔드 url?token=";
+        String targetUrl = "http://localhost:5173/password?token=";
         String link = targetUrl + accessToken;
         log.debug("link : {}", link);
 
