@@ -84,13 +84,17 @@ public class AuthController {
     public ResponseEntity logout(@RequestHeader("Authorization") String accessToken,
                                  @CookieValue("accessToken") Cookie access,
                                  @CookieValue("refreshToken") Cookie refresh, HttpServletResponse response) {
+
+        log.debug("access {}", access.getValue());
+        log.debug("refresh {}", refresh.getValue());
+
         jwtService.addBlackList(accessToken);
 
         // TODO 쿠키 setMax(0);
-        access.setMaxAge(0);
-        refresh.setMaxAge(0);
-        response.addCookie(access);
-        response.addCookie(refresh);
+//        access.setMaxAge(0);
+//        refresh.setMaxAge(0);
+//        response.addCookie(access);
+//        response.addCookie(refresh);
 
         return ResponseEntity.ok(Response.success());
     }
