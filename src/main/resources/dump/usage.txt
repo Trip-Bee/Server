@@ -1,1 +1,1 @@
-attraction_info 먼저 실행 후 TripBee 실행
+attraction_description, attraction_info 먼저 실행 후 TripBee 실행

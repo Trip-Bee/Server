@@ -155,6 +155,17 @@ ALTER TABLE `tripbee`.`spot` ADD FOREIGN KEY (`gugun_code`) REFERENCES `tripbee`
 
 
 -- -----------------------------------------------------
+-- Table `tripbee`.`spot_description`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tripbee`.`spot_description` (
+	select content_id id, homepage, overview, telname
+    from attraction_description
+);
+ALTER TABLE `tripbee`.`spot_description` ADD CONSTRAINT PRIMARY KEY (`id`);
+ALTER TABLE `tripbee`.`spot_description` ADD FOREIGN KEY (`id`) REFERENCES `tripbee`.`spot` (`id`);
+
+
+-- -----------------------------------------------------
 -- Table `tripbee`.`like`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tripbee`.`like` (
