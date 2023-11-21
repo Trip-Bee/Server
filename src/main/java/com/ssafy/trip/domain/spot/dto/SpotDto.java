@@ -11,8 +11,8 @@ import java.math.BigDecimal;
 @Builder
 public class SpotDto {
 
-    private Long id;
-    private Long typeId;
+    private int id;
+    private int typeId;
     private String title;
     private String addr1;
     private String addr2;
@@ -23,5 +23,6 @@ public class SpotDto {
     private BigDecimal longitude;
     private Long sidoCode;
     private Long gugunCode;
+    private String overview;
 
 }
