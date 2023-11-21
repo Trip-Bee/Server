@@ -49,4 +49,9 @@ public class SpotServiceImpl implements SpotService {
                 .totalPage(totalPage)
                 .build();
     }
+
+    @Override
+    public SpotDto getSpot(int spotId) throws Exception {
+        return spotMapper.findBySpotId(spotId).toDto();
+    }
 }

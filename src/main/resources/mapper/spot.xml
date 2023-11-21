@@ -41,5 +41,12 @@
         select count(*) from spot
         <include refid="search"></include>
     </select>
+    
+    <select id="findBySpotId" parameterType="long" resultMap="spot">
+        select s.id, s.type_id, s.title, s.addr1, s.addr2, s.zipcode, s.tel,
+        s.image, s.latitude, s.longitude, s.sido_code, s.gugun_code, d.overview
+        from spot s left join spot_description d on s.id = d.id
+        where s.id = ${spotId}
+    </select>
 
 </mapper>

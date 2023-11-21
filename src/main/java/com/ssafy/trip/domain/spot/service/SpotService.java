@@ -1,5 +1,6 @@
 package com.ssafy.trip.domain.spot.service;
 
+import com.ssafy.trip.domain.spot.dto.SpotDto;
 import com.ssafy.trip.domain.spot.dto.SpotTypeDto;
 import com.ssafy.trip.global.dto.PageResponse;
 
@@ -10,6 +11,6 @@ public interface SpotService {
 
     List<SpotTypeDto> getSpotTypeList() throws Exception;
     PageResponse search(Map<String, String> map) throws Exception;
-
+    SpotDto getSpot(int spotId) throws Exception;
 
 }

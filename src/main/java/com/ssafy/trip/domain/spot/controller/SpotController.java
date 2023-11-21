@@ -1,5 +1,6 @@
 package com.ssafy.trip.domain.spot.controller;
 
+import com.ssafy.trip.domain.spot.dto.SpotDto;
 import com.ssafy.trip.domain.spot.dto.SpotTypeDto;
 import com.ssafy.trip.domain.spot.service.SpotService;
 import com.ssafy.trip.global.dto.PageResponse;
@@ -28,6 +29,12 @@ public class SpotController {
     public ResponseEntity search(@RequestParam Map<String, String> map) throws Exception {
         PageResponse pageResponse = spotService.search(map);
         return ResponseEntity.ok(Response.success(pageResponse));
+    }
+
+    @GetMapping("/{spotId}")
+    public ResponseEntity getSpot(@PathVariable int spotId) throws Exception {
+        SpotDto spotDto = spotService.getSpot(spotId);
+        return ResponseEntity.ok(Response.success(spotDto));
     }
 
 }
