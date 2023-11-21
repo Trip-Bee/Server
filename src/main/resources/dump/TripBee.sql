@@ -288,6 +288,7 @@ INSERT INTO `sido` VALUES (1,'서울'),(2,'인천'),(3,'대전'),(4,'대구'),(5
 
 
 DROP TABLE IF EXISTS `attraction_info`;
+DROP TABLE IF EXISTS `attraction_description`;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
