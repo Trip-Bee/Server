@@ -1,16 +1,16 @@
 package com.ssafy.trip.domain.plan.controller;
 
 import com.ssafy.trip.domain.plan.dto.PlanDetailsDto;
-import com.ssafy.trip.domain.plan.dto.PlanDto;
 import com.ssafy.trip.domain.plan.dto.PlanRequestDto;
 import com.ssafy.trip.domain.plan.service.PlanService;
+import com.ssafy.trip.global.dto.PageResponse;
 import com.ssafy.trip.global.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,9 +29,9 @@ public class PlanController {
 
     // TODO 페이징 처리
     @GetMapping()
-    public ResponseEntity getPlans() {
+    public ResponseEntity getPlans(@RequestParam Map<String, String> map) {
 
-        List<PlanDto> plans = planService.findPlans();
+        PageResponse plans = planService.findPlans(map);
 
         return ResponseEntity.ok(Response.success(plans));
     }

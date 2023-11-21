@@ -8,12 +8,20 @@ import com.ssafy.trip.domain.plan.entity.PlanDetails;
 import com.ssafy.trip.domain.plan.entity.Theme;
 import com.ssafy.trip.domain.plan.mapper.PlanMapper;
 import com.ssafy.trip.domain.plan.service.PlanService;
+import com.ssafy.trip.global.dto.PageRequest;
+import com.ssafy.trip.global.dto.PageResponse;
+import com.ssafy.trip.global.dto.SearchRequest;
+import com.ssafy.trip.global.util.PageUtil;
+import com.ssafy.trip.global.util.SearchUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -69,10 +77,34 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public List<PlanDto> findPlans() {
-        List<PlanDto> plans = planMapper.findPlans();
+    public PageResponse findPlans(Map<String, String> map) {
+        PageRequest pageRequest = new PageRequest(map.get("page"), map.get("size"));
+        SearchRequest searchRequest = new SearchRequest(map.get("key"), map.get("word"));
 
-        return plans;
+        Map<String, String> param = new HashMap<>();
+        param.putAll(PageUtil.getStartAndSize(pageRequest));
+        param.putAll(SearchUtil.getKeyAndWord(searchRequest));
+
+        int size = Integer.parseInt(param.get("size"));
+
+        int totalCount = planMapper.countPlans();
+//        int totalCount = postMapper.countByCategory(convertCategory(category).toString());
+        int currentPage = Integer.parseInt(param.get("page"));
+        int totalPage = (totalCount - 1) / Integer.parseInt(param.get("size")) + 1;
+
+
+        List<PlanDto> plans = planMapper.findPlans(param);
+
+//        List<PostResponseDto> list = postMapper.findAllByCategory(param)
+//                .stream().map(Post::toDto)
+//                .collect(Collectors.toList());
+
+        return PageResponse.builder()
+                .data(plans)
+                .size(size)
+                .currentPage(currentPage)
+                .totalPage(totalPage)
+                .build();
     }
 
     @Override
