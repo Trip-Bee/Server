@@ -37,6 +37,8 @@ public class AuthServiceImpl implements AuthService {
         return UserInfoDto.builder()
                 .id(user.getId())
                 .email(user.getEmail())
+                .nickname(user.getNickname())
+                .profileImage(user.getProfileImage())
                 .role(user.getRole().toString())
                 .build();
     }
