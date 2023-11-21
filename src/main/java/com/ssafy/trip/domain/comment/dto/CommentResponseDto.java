@@ -3,6 +3,7 @@ package com.ssafy.trip.domain.comment.dto;
 import com.ssafy.trip.domain.comment.entity.Comment;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,7 +17,7 @@ public class CommentResponseDto {
     private Long postId;
     private Long writerId;
     private String nickname;
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     private LocalDateTime updatedAt;
 
 }

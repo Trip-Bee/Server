@@ -23,7 +23,7 @@ public class Comment extends BaseEntity {
                 .postId(postId)
                 .writerId(writerId)
                 .nickname(nickname)
-                .createdAt(getCreatedAt())
+                .createdAt(getCreatedAt().toLocalDate())
                 .updatedAt(getUpdatedAt())
                 .build();
     }
