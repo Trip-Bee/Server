@@ -88,16 +88,10 @@ public class PlanServiceImpl implements PlanService {
         int size = Integer.parseInt(param.get("size"));
 
         int totalCount = planMapper.countPlans();
-//        int totalCount = postMapper.countByCategory(convertCategory(category).toString());
         int currentPage = Integer.parseInt(param.get("page"));
         int totalPage = (totalCount - 1) / Integer.parseInt(param.get("size")) + 1;
 
-
         List<PlanDto> plans = planMapper.findPlans(param);
-
-//        List<PostResponseDto> list = postMapper.findAllByCategory(param)
-//                .stream().map(Post::toDto)
-//                .collect(Collectors.toList());
 
         return PageResponse.builder()
                 .data(plans)

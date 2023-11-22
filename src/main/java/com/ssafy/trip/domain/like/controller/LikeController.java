@@ -16,8 +16,8 @@ public class LikeController {
     private final LikeService likeService;
 
     @PostMapping
-    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN'))")
-    public ResponseEntity addLike(@RequestBody LikeDto likeDto) throws Exception {
+    @PreAuthorize("(hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')) and (#likeDto.userId == authentication.principal.id)")
+    public ResponseEntity like(@RequestBody LikeDto likeDto) throws Exception {
         likeService.addOrDeleteLike(likeDto.getUserId(), likeDto.getSpotId());
         return ResponseEntity.ok(Response.success());
     }
