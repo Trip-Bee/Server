@@ -13,7 +13,6 @@ public interface LikeMapper {
     void save(Like like) throws SQLException;
     void delete(Long likeId) throws SQLException;
     int count(Long spotId) throws SQLException;
-
     Optional<Like> findByUserIdAndSpotId(Map<String, Long> map);
 
 }

@@ -27,7 +27,6 @@ public class PlanController {
         return ResponseEntity.ok(Response.success());
     }
 
-    // TODO 페이징 처리
     @GetMapping()
     public ResponseEntity getPlans(@RequestParam Map<String, String> map) {
 

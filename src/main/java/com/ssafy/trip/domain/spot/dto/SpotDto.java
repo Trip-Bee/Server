@@ -6,6 +6,7 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -22,5 +23,5 @@ public class SpotDto {
     private Long sidoCode;
     private Long gugunCode;
     private String overview;
-
+    private Boolean isLike;
 }
