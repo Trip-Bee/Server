@@ -11,7 +11,7 @@
         <result column="updated_at" property="updatedAt"></result>
     </resultMap>
 
-    <insert id="save" parameterType="comment">
+    <insert id="save" parameterType="like">
         insert into `like` (user_id, spot_id)
         values (${userId}, ${spotId})
     </insert>
@@ -26,7 +26,9 @@
         where spot_id = ${spotId}
     </select>
 
-    <select id="findByUserIdAndSpotId" parameterType="map">
-
+    <select id="findByUserIdAndSpotId" parameterType="map" resultMap="like">
+        select id, user_id, spot_id
+        from `like`
+        where user_id = ${userId} and spot_id = ${spotId}
     </select>
 </mapper>

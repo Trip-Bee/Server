@@ -16,7 +16,7 @@ public class Like extends BaseEntity {
 
     public LikeDto toDto() {
         return LikeDto.builder()
-                .id(id)
+//                .id(id)
                 .userId(userId)
                 .spotId(spotId)
                 .build();
