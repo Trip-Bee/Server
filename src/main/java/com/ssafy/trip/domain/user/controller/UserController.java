@@ -3,10 +3,10 @@ package com.ssafy.trip.domain.user.controller;
 import com.ssafy.trip.domain.user.dto.LoginUserDto;
 import com.ssafy.trip.domain.user.dto.PasswordRequestDto;
 import com.ssafy.trip.domain.user.dto.UpdateDto;
-import com.ssafy.trip.domain.user.dto.UserDetailResponseDto;
 import com.ssafy.trip.domain.user.entity.User;
 import com.ssafy.trip.domain.user.service.UserService;
 import com.ssafy.trip.global.dto.Response;
+import com.ssafy.trip.global.jwt.dto.UserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +24,7 @@ public class UserController {
 //    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity getUserInfo(@PathVariable Long userId) {
         User user = userService.getUserInfo(userId);
-        return ResponseEntity.ok(Response.success(UserDetailResponseDto.from(user)));
+        return ResponseEntity.ok(Response.success(UserInfoDto.from(user)));
     }
 
     @PatchMapping("/{userId}")
