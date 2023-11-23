@@ -55,6 +55,8 @@ public class SpotServiceImpl implements SpotService {
                 map.put("spotId", Long.valueOf(spot.getId()));
                 spot.setIsLike(likeMapper.findByUserIdAndSpotId(map).isPresent());
             });
+        } else {
+            list.stream().forEach(spot -> spot.setIsLike(false));
         }
 
         return PageResponse.<List<SpotDto>>builder()
