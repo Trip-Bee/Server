@@ -23,7 +23,7 @@ public class LikeController {
     }
 
     @GetMapping
-    public ResponseEntity count(@RequestParam Long spotId) throws Exception {
+    public ResponseEntity count(@RequestParam int spotId) throws Exception {
         int cnt = likeService.count(spotId);
         return ResponseEntity.ok(Response.success(cnt));
     }

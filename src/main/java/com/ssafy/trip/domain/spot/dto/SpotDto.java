@@ -24,4 +24,5 @@ public class SpotDto {
     private Long gugunCode;
     private String overview;
     private Boolean isLike;
+    private int likeCount;
 }

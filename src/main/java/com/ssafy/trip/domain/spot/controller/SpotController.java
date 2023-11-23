@@ -35,8 +35,9 @@ public class SpotController {
     }
 
     @GetMapping("/{spotId}")
-    public ResponseEntity getSpot(@PathVariable int spotId) throws Exception {
-        SpotDto spotDto = spotService.getSpot(spotId);
+    public ResponseEntity getSpot(@PathVariable int spotId,
+                                  @AuthenticationPrincipal LoginUserDto loginUserDto) throws Exception {
+        SpotDto spotDto = spotService.getSpot(spotId, loginUserDto);
         return ResponseEntity.ok(Response.success(spotDto));
     }
 

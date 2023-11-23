@@ -12,6 +12,6 @@ public interface SpotService {
 
     List<SpotTypeDto> getSpotTypeList() throws Exception;
     PageResponse search(Map<String, String> map, LoginUserDto loginUserDto) throws Exception;
-    SpotDto getSpot(int spotId) throws Exception;
+    SpotDto getSpot(int spotId, LoginUserDto loginUserDto) throws Exception;
 
 }
