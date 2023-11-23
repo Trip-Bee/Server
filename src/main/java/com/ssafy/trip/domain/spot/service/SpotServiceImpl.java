@@ -77,7 +77,21 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public SpotDto getSpot(int spotId) throws Exception {
-        return spotMapper.findBySpotId(spotId).toDto();
+    public SpotDto getSpot(int spotId, LoginUserDto loginUserDto) throws Exception {
+
+        SpotDto spot = spotMapper.findBySpotId(spotId).toDto();
+        int likeCount = likeMapper.countBySpotId(spotId);
+        spot.setLikeCount(likeCount);
+
+        if (loginUserDto != null) {
+            Map<String, Long> map = new HashMap<>();
+            map.put("userId", loginUserDto.getId());
+            map.put("spotId", (long) spotId);
+            spot.setIsLike(likeMapper.findByUserIdAndSpotId(map).isPresent());
+        } else {
+            spot.setIsLike(false);
+        }
+
+        return spot;
     }
 }
