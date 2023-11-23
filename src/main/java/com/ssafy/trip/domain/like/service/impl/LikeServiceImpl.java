@@ -1,5 +1,6 @@
 package com.ssafy.trip.domain.like.service.impl;
 
+import com.ssafy.trip.domain.like.dto.LikeResponse;
 import com.ssafy.trip.domain.like.entity.Like;
 import com.ssafy.trip.domain.like.mapper.LikeMapper;
 import com.ssafy.trip.domain.like.service.LikeService;
@@ -32,22 +33,25 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public void addOrDeleteLike(Long userId, Long spotId) throws Exception {
+    public LikeResponse addOrDeleteLike(Long userId, int spotId) throws Exception {
         // userId, spotId에 해당하는 like가 존재하면 제거
         // 존재하지 않으면 저장
         Map<String, Long> map = new HashMap<>();
         map.put("userId", userId);
-        map.put("spotId", spotId);
+        map.put("spotId", (long) spotId);
 
         // TODO xml에서 findByUserIdAndSpotId, delete, save 구현 / likeMapper 에서 다듬기 / LikeDto, Like 다듬기
         Optional<Like> findLike = likeMapper.findByUserIdAndSpotId(map);
+        int likeCount = likeMapper.countBySpotId(spotId);
 
         if (findLike.isPresent()) { // 존재할 경우 삭제
             Like like = findLike.get();
             likeMapper.delete(like.getId());
+            return LikeResponse.builder().isLike(false).likeCount((long)likeCount - 1).build();
         } else {    // 없을 경우 저장
             Like like = Like.builder().userId(userId).spotId(spotId).build();
             likeMapper.save(like);
+            return LikeResponse.builder().isLike(true).likeCount((long) likeCount + 1).build();
         }
     }
 }
