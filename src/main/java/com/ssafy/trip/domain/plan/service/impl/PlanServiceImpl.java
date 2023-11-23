@@ -3,6 +3,7 @@ package com.ssafy.trip.domain.plan.service.impl;
 import com.ssafy.trip.domain.plan.dto.DetailsDto;
 import com.ssafy.trip.domain.plan.dto.PlanDetailsDto;
 import com.ssafy.trip.domain.plan.dto.PlanDto;
+import com.ssafy.trip.domain.plan.dto.PlanTop10Dto;
 import com.ssafy.trip.domain.plan.entity.Plan;
 import com.ssafy.trip.domain.plan.entity.PlanDetails;
 import com.ssafy.trip.domain.plan.entity.Theme;
@@ -121,5 +122,11 @@ public class PlanServiceImpl implements PlanService {
     @Override
     public void delete(Long planId) {
         planMapper.deleteById(planId);
+    }
+
+    @Override
+    public List<PlanTop10Dto> getPlansTop10() {
+        List<PlanTop10Dto> plans = planMapper.findPlansTop10();
+        return plans;
     }
 }
