@@ -89,7 +89,7 @@
     </sql>
 
     <select id="findPlans" parameterType="map" resultMap="planDto">
-        select p.id, p.start_date, p.end_date, p.title, p.user_id, u.nickname, p.created_at
+        select p.id, p.start_date, p.end_date, p.title, p.user_id, u.nickname, p.hit, p.created_at
         from plan p join user u
         on p.user_id = u.id
         <trim prefix="where" prefixOverrides="and">
