@@ -20,7 +20,7 @@
         delete from `like` where id = ${likeId}
     </delete>
 
-    <select id="count" parameterType="long" resultType="int">
+    <select id="countBySpotId" parameterType="long" resultType="int">
         select count(*)
         from `like`
         where spot_id = ${spotId}
@@ -31,4 +31,5 @@
         from `like`
         where user_id = ${userId} and spot_id = ${spotId}
     </select>
+
 </mapper>

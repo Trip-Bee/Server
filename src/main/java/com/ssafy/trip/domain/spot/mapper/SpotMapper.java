@@ -1,5 +1,6 @@
 package com.ssafy.trip.domain.spot.mapper;
 
+import com.ssafy.trip.domain.spot.dto.SpotDto;
 import com.ssafy.trip.domain.spot.entity.Spot;
 import com.ssafy.trip.domain.spot.entity.SpotType;
 import org.apache.ibatis.annotations.Mapper;

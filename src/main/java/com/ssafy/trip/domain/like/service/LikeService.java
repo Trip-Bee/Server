@@ -4,7 +4,7 @@ public interface LikeService {
 
 //    void addLike(LikeDto likeDto) throws Exception;
 //    void deleteLike(Long likeId) throws Exception;
-    int count(Long spotId) throws Exception;
+    int count(int spotId) throws Exception;
 
     void addOrDeleteLike(Long userId, Long spotId) throws Exception;
 

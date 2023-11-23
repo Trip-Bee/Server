@@ -2,10 +2,7 @@ package com.ssafy.trip.domain.plan.dto;
 
 import com.ssafy.trip.domain.plan.entity.Plan;
 import com.ssafy.trip.domain.plan.entity.PlanDetails;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;

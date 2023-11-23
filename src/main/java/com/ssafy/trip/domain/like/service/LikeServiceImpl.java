@@ -26,8 +26,8 @@ public class LikeServiceImpl implements LikeService {
 //    }
 
     @Override
-    public int count(Long spotId) throws Exception {
-        return likeMapper.count(spotId);
+    public int count(int spotId) throws Exception {
+        return likeMapper.countBySpotId(spotId);
     }
 
     @Override

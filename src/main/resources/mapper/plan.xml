@@ -61,7 +61,7 @@
         insert into plan_details(`order`, date_order, cost, plan_id, spot_id, vehicle_id)
         values
         <foreach collection="list" item="detail" separator=",">
-            (${detail.order}, ${detail.dateOrder}, ${detail.cost}, ${detail.planId}, ${detail.spotId}, ${detail.vehicleId})
+            (${detail.order}, ${detail.dateOrder}, ${detail.cost}, ${detail.planId}, ${detail.spotId}, #{detail.vehicleId})
         </foreach>
     </insert>
 
