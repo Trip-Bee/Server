@@ -2,6 +2,7 @@ package com.ssafy.trip.domain.spot.service.impl;
 
 import com.ssafy.trip.domain.like.mapper.LikeMapper;
 import com.ssafy.trip.domain.spot.dto.SpotDto;
+import com.ssafy.trip.domain.spot.dto.SpotTop10Dto;
 import com.ssafy.trip.domain.spot.dto.SpotTypeDto;
 import com.ssafy.trip.domain.spot.entity.Spot;
 import com.ssafy.trip.domain.spot.entity.SpotType;
@@ -47,6 +48,7 @@ public class SpotServiceImpl implements SpotService {
                 .collect(Collectors.toList());
 
         // 로그인 한 사용자의 경우 isLike 세팅
+        // 좋아요 여부 처리
         if (loginUserDto != null) {
             Map<String, Long> map = new HashMap<>();
             Long userId = loginUserDto.getId();
@@ -60,11 +62,13 @@ public class SpotServiceImpl implements SpotService {
             list.stream().forEach(spot -> spot.setIsLike(false));
         }
 
-        for (SpotDto spotDto : list) {
-            int spotId = spotDto.getId();
-            int likeCount = likeMapper.countBySpotId(spotId);
-            spotDto.setLikeCount(likeCount);
-        }
+//        for (SpotDto spotDto : list) {
+//            int spotId = spotDto.getId();
+//            int likeCount = likeMapper.countBySpotId(spotId);
+//            spotDto.setLikeCount(likeCount);
+//        }
+
+
 
         // spotDto의 id를 이용해서 on() 으로 묶어서 like DB에서 where spot_id = id 로 개수목록 조회
         // 반복문 돌리면서 개수 넣기
@@ -94,5 +98,12 @@ public class SpotServiceImpl implements SpotService {
         }
 
         return spot;
+    }
+
+    @Override
+    public List<SpotTop10Dto> getSpotTop10(LoginUserDto loginUserDto) throws Exception {
+        // 좋아요 기준 최상위 10개 조회
+
+        return null;
     }
 }

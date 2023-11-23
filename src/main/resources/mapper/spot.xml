@@ -8,6 +8,7 @@
         <result column="type_id" property="typeId"></result>
         <result column="sido_code" property="sidoCode"></result>
         <result column="gugun_code" property="gugunCode"></result>
+        <result column="like_count" property="likeCount"></result>
     </resultMap>
 
     <select id="findAllSpotType" resultType="SpotType">
@@ -44,9 +45,12 @@
     
     <select id="findBySpotId" parameterType="long" resultMap="spot">
         select s.id, s.type_id, s.title, s.addr1, s.addr2, s.zipcode, s.tel,
-        s.image, s.latitude, s.longitude, s.sido_code, s.gugun_code, d.overview
+        s.image, s.latitude, s.longitude, s.sido_code, s.gugun_code, s.like_count, d.overview
         from spot s left join spot_description d on s.id = d.id
         where s.id = ${spotId}
     </select>
 
+    <update id="updateLikeCount" parameterType="map">
+        update spot set like_count = ${likeCount} where id = ${spotId}
+    </update>
 </mapper>
