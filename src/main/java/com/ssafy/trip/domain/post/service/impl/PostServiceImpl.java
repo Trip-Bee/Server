@@ -1,10 +1,11 @@
-package com.ssafy.trip.domain.post.service;
+package com.ssafy.trip.domain.post.service.impl;
 
 import com.ssafy.trip.domain.post.dto.ModifyPostRequestDto;
 import com.ssafy.trip.domain.post.dto.PostResponseDto;
 import com.ssafy.trip.domain.post.dto.WritePostRequestDto;
 import com.ssafy.trip.domain.post.entity.Post;
 import com.ssafy.trip.domain.post.mapper.PostMapper;
+import com.ssafy.trip.domain.post.service.PostService;
 import com.ssafy.trip.global.dto.PageRequest;
 import com.ssafy.trip.global.dto.PageResponse;
 import com.ssafy.trip.global.dto.SearchRequest;

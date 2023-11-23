@@ -1,4 +1,4 @@
-package com.ssafy.trip.domain.spot.service;
+package com.ssafy.trip.domain.spot.service.impl;
 
 import com.ssafy.trip.domain.like.mapper.LikeMapper;
 import com.ssafy.trip.domain.spot.dto.SpotDto;
@@ -6,6 +6,7 @@ import com.ssafy.trip.domain.spot.dto.SpotTypeDto;
 import com.ssafy.trip.domain.spot.entity.Spot;
 import com.ssafy.trip.domain.spot.entity.SpotType;
 import com.ssafy.trip.domain.spot.mapper.SpotMapper;
+import com.ssafy.trip.domain.spot.service.SpotService;
 import com.ssafy.trip.domain.user.dto.LoginUserDto;
 import com.ssafy.trip.global.dto.PageRequest;
 import com.ssafy.trip.global.dto.PageResponse;
