@@ -12,7 +12,7 @@ public class Like extends BaseEntity {
 
     private Long id;
     private Long userId;
-    private Long spotId;
+    private int spotId;
 
     public LikeDto toDto() {
         return LikeDto.builder()

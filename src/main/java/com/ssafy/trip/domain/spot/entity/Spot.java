@@ -6,6 +6,7 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Getter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -24,6 +25,7 @@ public class Spot {
     private Long sidoCode;
     private Long gugunCode;
     private String overview;
+    private int likeCount;
 
     public SpotDto toDto() {
         String addr = "";
@@ -44,6 +46,7 @@ public class Spot {
                 .sidoCode(sidoCode)
                 .gugunCode(gugunCode)
                 .overview(overview)
+                .likeCount(likeCount)
                 .build();
     }
 

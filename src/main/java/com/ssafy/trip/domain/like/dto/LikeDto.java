@@ -9,5 +9,5 @@ import lombok.*;
 public class LikeDto {
 
     private Long userId;
-    private Long spotId;
+    private int spotId;
 }

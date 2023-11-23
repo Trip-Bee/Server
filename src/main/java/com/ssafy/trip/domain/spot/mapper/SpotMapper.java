@@ -1,6 +1,5 @@
 package com.ssafy.trip.domain.spot.mapper;
 
-import com.ssafy.trip.domain.spot.dto.SpotDto;
 import com.ssafy.trip.domain.spot.entity.Spot;
 import com.ssafy.trip.domain.spot.entity.SpotType;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,5 +15,5 @@ public interface SpotMapper {
     List<Spot> search(Map<String, String> map) throws SQLException;
     int countBySearch(Map<String, String> map) throws SQLException;
     Spot findBySpotId(int spotId) throws SQLException;
-
+    void updateLikeCount(Map<String, Integer> spotMap) throws SQLException;
 }

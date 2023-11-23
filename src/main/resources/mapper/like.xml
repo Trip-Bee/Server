@@ -31,5 +31,4 @@
         from `like`
         where user_id = ${userId} and spot_id = ${spotId}
     </select>
-
 </mapper>
