@@ -16,4 +16,5 @@ public interface SpotMapper {
     int countBySearch(Map<String, String> map) throws SQLException;
     Spot findBySpotId(int spotId) throws SQLException;
     void updateLikeCount(Map<String, Integer> spotMap) throws SQLException;
+    List<Spot> findTopByLikeCount() throws SQLException;
 }

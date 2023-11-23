@@ -88,7 +88,22 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public List<SpotTop10Dto> getSpotTop10(LoginUserDto loginUserDto) throws Exception {
         // 좋아요 기준 최상위 10개 조회
+        List<Spot> spots = spotMapper.findTopByLikeCount();
+        List<SpotTop10Dto> top10 = spots.stream().map(spot -> SpotTop10Dto.from(spot)).collect(Collectors.toList());
 
-        return null;
+        if (loginUserDto != null) {
+            Map<String, Long> map = new HashMap<>();
+            Long userId = loginUserDto.getId();
+            map.put("userId", userId);
+
+            top10.stream().forEach(spot -> {
+                map.put("spotId", Long.valueOf(spot.getSpotId()));
+                spot.setIsLike(likeMapper.findByUserIdAndSpotId(map).isPresent());
+            });
+        } else {
+            top10.stream().forEach(spot -> spot.setIsLike(false));
+        }
+
+        return top10;
     }
 }
