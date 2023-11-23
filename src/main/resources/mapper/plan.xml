@@ -12,6 +12,10 @@
         <result column="created_at" property="createdAt"/>
     </resultMap>
 
+    <resultMap id="planTop10Dto" type="planTop10Dto">
+        <result column="id" property="planId"/>
+    </resultMap>
+
     <resultMap id="planDetailsDto" type="planDetailsDto">
 <!--        select u.nickname, p.title, p.total_cost, p.start_date, p.end_date, p.head_count, p.hit, th.name-->
         <result column="title" property="planTitle"/>
@@ -76,6 +80,13 @@
         set is_deleted = true, updated_at = now()
         where id = ${id}
     </update>
+
+    <select id="findPlansTop10" resultMap="planTop10Dto">
+        select id, title, hit
+        from plan
+        order by hit desc, id
+        limit 10;
+    </select>
 
     <sql id="search">
         <if test="key != null and key != ''">

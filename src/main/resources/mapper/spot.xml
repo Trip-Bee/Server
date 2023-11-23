@@ -50,6 +50,14 @@
         where s.id = ${spotId}
     </select>
 
+<!--    // 타이틀, 주소 + 우편번호, 이미지, spotId, 좋아요여부, 좋아요개수-->
+    <select id="findTopByLikeCount" resultMap="spot">
+        select s.title, s.addr1, s.addr2, s.zipcode, s.image, s.id, s.like_count
+        from spot s
+        order by s.like_count desc, s.id
+        limit 10;
+    </select>
+
     <update id="updateLikeCount" parameterType="map">
         update spot set like_count = ${likeCount} where id = ${spotId}
     </update>

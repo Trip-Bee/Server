@@ -49,7 +49,6 @@ public class SpotController {
     @GetMapping("/top10")
     public ResponseEntity getSpotTop10(@AuthenticationPrincipal LoginUserDto loginUserDto) throws Exception {
         // 타이틀, 주소 + 우편번호, 이미지, spotId, 좋아요여부, 좋아요개수
-//        spotService.getSpotTop10(loginUserDto);
         List<SpotTop10Dto> spotTop10 = spotService.getSpotTop10(loginUserDto);
         return ResponseEntity.ok(Response.success(spotTop10));
     }

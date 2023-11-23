@@ -2,15 +2,16 @@ package com.ssafy.trip.domain.plan.controller;
 
 import com.ssafy.trip.domain.plan.dto.PlanDetailsDto;
 import com.ssafy.trip.domain.plan.dto.PlanRequestDto;
+import com.ssafy.trip.domain.plan.dto.PlanTop10Dto;
 import com.ssafy.trip.domain.plan.service.PlanService;
 import com.ssafy.trip.global.dto.PageResponse;
 import com.ssafy.trip.global.dto.Response;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -49,6 +50,13 @@ public class PlanController {
     public ResponseEntity delete(@PathVariable Long planId) {
         planService.delete(planId);
         return ResponseEntity.ok(Response.success());
+    }
+
+    @GetMapping("/top10")
+    public ResponseEntity getPlansTop10() {
+
+        List<PlanTop10Dto> plans = planService.getPlansTop10();
+        return ResponseEntity.ok(Response.success(plans));
     }
 
 }
