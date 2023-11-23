@@ -1,10 +1,11 @@
-package com.ssafy.trip.domain.area.service;
+package com.ssafy.trip.domain.area.service.impl;
 
 import com.ssafy.trip.domain.area.dto.GugunDto;
 import com.ssafy.trip.domain.area.dto.SidoDto;
 import com.ssafy.trip.domain.area.entity.Gugun;
 import com.ssafy.trip.domain.area.entity.Sido;
 import com.ssafy.trip.domain.area.mapper.AreaMapper;
+import com.ssafy.trip.domain.area.service.AreaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

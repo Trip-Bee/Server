@@ -1,7 +1,8 @@
-package com.ssafy.trip.domain.like.service;
+package com.ssafy.trip.domain.like.service.impl;
 
 import com.ssafy.trip.domain.like.entity.Like;
 import com.ssafy.trip.domain.like.mapper.LikeMapper;
+import com.ssafy.trip.domain.like.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
