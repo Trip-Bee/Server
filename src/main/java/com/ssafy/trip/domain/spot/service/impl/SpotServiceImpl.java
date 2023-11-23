@@ -47,8 +47,6 @@ public class SpotServiceImpl implements SpotService {
                 .stream().map(Spot::toDto)
                 .collect(Collectors.toList());
 
-        // 로그인 한 사용자의 경우 isLike 세팅
-        // 좋아요 여부 처리
         if (loginUserDto != null) {
             Map<String, Long> map = new HashMap<>();
             Long userId = loginUserDto.getId();
@@ -62,17 +60,6 @@ public class SpotServiceImpl implements SpotService {
             list.stream().forEach(spot -> spot.setIsLike(false));
         }
 
-//        for (SpotDto spotDto : list) {
-//            int spotId = spotDto.getId();
-//            int likeCount = likeMapper.countBySpotId(spotId);
-//            spotDto.setLikeCount(likeCount);
-//        }
-
-
-
-        // spotDto의 id를 이용해서 on() 으로 묶어서 like DB에서 where spot_id = id 로 개수목록 조회
-        // 반복문 돌리면서 개수 넣기
-
         return PageResponse.<List<SpotDto>>builder()
                 .data(list)
                 .size(size)
@@ -85,8 +72,6 @@ public class SpotServiceImpl implements SpotService {
     public SpotDto getSpot(int spotId, LoginUserDto loginUserDto) throws Exception {
 
         SpotDto spot = spotMapper.findBySpotId(spotId).toDto();
-        int likeCount = likeMapper.countBySpotId(spotId);
-        spot.setLikeCount(likeCount);
 
         if (loginUserDto != null) {
             Map<String, Long> map = new HashMap<>();
