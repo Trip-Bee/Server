@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.domain.like.mapper.LikeMapper">
+
+    <resultMap id="like" type="like">
+        <result column="user_id" property="userId"></result>
+        <result column="spot_id" property="spotId"></result>
+        <result column="created_at" property="createdAt"></result>
+        <result column="updated_at" property="updatedAt"></result>
+    </resultMap>
+
+    <insert id="save" parameterType="like">
+        insert into `like` (user_id, spot_id)
+        values (${userId}, ${spotId})
+    </insert>
+
+    <delete id="delete" parameterType="long">
+        delete from `like` where id = ${likeId}
+    </delete>
+
+    <select id="countBySpotId" parameterType="long" resultType="int">
+        select count(*)
+        from `like`
+        where spot_id = ${spotId}
+    </select>
+
+    <select id="findByUserIdAndSpotId" parameterType="map" resultMap="like">
+        select id, user_id, spot_id
+        from `like`
+        where user_id = ${userId} and spot_id = ${spotId}
+    </select>
+</mapper>

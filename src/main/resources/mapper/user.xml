@@ -3,5 +3,56 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.trip.domain.user.mapper.UserMapper">
+    <resultMap id="user" type="user">
+        <result column="profile_image" property="profileImage"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
 
+    <insert id="insert" parameterType="user">
+        insert into user(email, password, nickname, profile_image, status, role, created_at, updated_at)
+        values(#{email}, #{password}, #{nickname}, #{profileImage}, #{status}, #{role}, now(), now())
+    </insert>
+
+    <select id="countByEmail" parameterType="string" resultType="int">
+        select count(*)
+        from user
+        where email=#{email};
+    </select>
+
+    <select id="findById" parameterType="long" resultMap="user">
+        select id, email, password, nickname, profile_image, created_at, updated_at, role
+        from user
+        where id = ${id}
+    </select>
+
+    <select id="findByEmail" parameterType="string" resultMap="user">
+        select id, email, password, nickname, profile_image, role, created_at, updated_at
+        from user
+        where email = #{email} and status = 'MEMBER'
+    </select>
+
+    <update id="update" parameterType="user">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="email != null">email = #{email},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="profileImage != null">profile_image = #{profileImage},</if>
+            updated_at = now()
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateUserStatus">
+        update user
+        set status = #{status}, updated_at = now()
+        where id=${id}
+    </update>
+
+    <update id="updatePassword">
+        update user
+        set password = #{password}, updated_at = now()
+        where id = ${id}
+    </update>
 </mapper>

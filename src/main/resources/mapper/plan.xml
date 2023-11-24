@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.domain.plan.mapper.PlanMapper">
+
+    <resultMap id="planDto" type="planDto">
+        <result column="id" property="planId"/>
+        <result column="user_id" property="writerId"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+        <result column="created_at" property="createdAt"/>
+    </resultMap>
+
+    <resultMap id="planTop10Dto" type="planTop10Dto">
+        <result column="id" property="planId"/>
+    </resultMap>
+
+    <resultMap id="planDetailsDto" type="planDetailsDto">
+<!--        select u.nickname, p.title, p.total_cost, p.start_date, p.end_date, p.head_count, p.hit, th.name-->
+        <result column="title" property="planTitle"/>
+        <result column="total_cost" property="totalCost"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+        <result column="head_count" property="headCount"/>
+        <result column="name" property="theme"/>
+    </resultMap>
+
+    <resultMap id="detailsDto" type="detailsDto">
+        <result column="date_order" property="dateOrder"/>
+        <result column="name" property="vehicleName"/>
+        <result column="title" property="spotTitle"/>
+        <result column="image" property="spotImage"/>
+    </resultMap>
+
+    <select id="findByName" parameterType="string">
+        select id, name
+        from theme
+        where name = #{name}
+    </select>
+
+    <select id="countPlans" resultType="int">
+        select count(*)
+        from plan
+        where is_deleted = 0
+    </select>
+
+    <insert id="saveTheme" parameterType="Theme">
+        insert into theme(name)
+        values(#{name})
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <insert id="savePlan" parameterType="Plan">
+        insert into plan(user_id, theme_id, title, total_cost, start_date, end_date, head_count)
+        values(${writerId}, ${themeId}, #{title}, ${totalCost}, #{startDate}, #{endDate}, ${headCount})
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <insert id="savePlanDetails" parameterType="java.util.Map">
+        insert into plan_details(`order`, date_order, cost, plan_id, spot_id, vehicle_id)
+        values
+        <foreach collection="list" item="detail" separator=",">
+            (${detail.order}, ${detail.dateOrder}, ${detail.cost}, ${detail.planId}, ${detail.spotId}, #{detail.vehicleId})
+        </foreach>
+    </insert>
+
+    <update id="updateHit" parameterType="long">
+        update plan
+        set hit = hit + 1, updated_at = now()
+        where id = ${id}
+    </update>
+
+    <update id="deleteById" parameterType="long">
+        update plan
+        set is_deleted = true, updated_at = now()
+        where id = ${id}
+    </update>
+
+    <select id="findPlansTop10" resultMap="planTop10Dto">
+        select id, title, hit
+        from plan
+        order by hit desc, id
+        limit 10;
+    </select>
+
+    <sql id="search">
+        <if test="key != null and key != ''">
+            <if test="key == 'p.title'">
+                and title like concat('%', #{word}, '%')
+            </if>
+            <if test="key != 'p.title'">
+                and ${key} = #{word}
+            </if>
+        </if>
+    </sql>
+
+    <select id="findPlans" parameterType="map" resultMap="planDto">
+        select p.id, p.start_date, p.end_date, p.title, p.user_id, u.nickname, p.hit, p.created_at
+        from plan p join user u
+        on p.user_id = u.id
+        <trim prefix="where" prefixOverrides="and">
+            <include refid="search"></include>
+                    and p.is_deleted = 0
+                </trim>
+                order by p.id desc
+                limit ${start}, ${size}
+    </select>
+
+<!--    <select id="findAllByCategory" parameterType="map" resultMap="post">-->
+<!--        select p.id, p.writer_id, u.nickname, p.title, p.category, p.content, p.hit, p.created_at, p.updated_at-->
+<!--        from post p join user u on p.writer_id = u.id-->
+<!--        <trim prefix="where" prefixOverrides="and">-->
+<!--            <include refid="search"></include>-->
+<!--            and p.category = #{category}-->
+<!--            and p.is_deleted = 0-->
+<!--        </trim>-->
+<!--        order by p.id desc-->
+<!--        limit ${start}, ${size}-->
+<!--    </select>-->
+
+<!--    Plan, User, Theme inner join -->
+    <select id="findPlanById" parameterType="long" resultMap="planDetailsDto">
+        select u.nickname, p.title, p.total_cost, p.start_date, p.end_date, p.head_count, p.hit, th.name
+        from plan p join user u join theme th
+        on p.user_id = u.id and p.theme_id = th.id
+        where p.id = ${id}
+    </select>
+
+    <select id="findPlanDetailsByPlanId" parameterType="long" resultMap="detailsDto">
+        select v.name, s.title, s.image, pd.cost, pd.order, pd.date_order
+        from plan_details pd join vehicle v join spot s
+        on pd.vehicle_id = v.id and pd.spot_id = s.id
+        where pd.plan_id = ${planId}
+        order by pd.date_order, pd.order
+    </select>
+
+</mapper>
